@@ -7,30 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #333; /* Achtergrondkleur van de header */
+            background-color: #333; /* Achtergrondkleur */
             color: #f0f0f0;
             margin: 0;
             padding: 0;
         }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .title-box {
+        .section-box {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: white; /* Witte achtergrond voor de titel */
+            background-color: #f0f0f0; /* Lichte achtergrondkleur */
             color: #333; /* Donkere tekstkleur */
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        header h1 {
-            font-size: 3em; /* Verhoogde grootte van de hoofdtitel */
+        .section-box h1 {
+            font-size: 2.5em;
             margin: 0;
+        }
+        .section-box p {
+            font-size: 1.2em;
+            margin: 10px 0 0 0;
         }
         .intro {
             max-width: 800px;
@@ -80,7 +78,7 @@
             color: white;
             padding: 20px;
             text-align: center;
-            margin-top: auto; /* Push the footer to the bottom */
+            margin-top: auto; /* Push de footer naar beneden */
         }
         footer a {
             color: white;
@@ -94,10 +92,10 @@
 </head>
 <body>
     <header>
-        <div class="title-box">
+        <div class="section-box">
             <h1>Joep van Dongen</h1>
+            <p>Welkom op mijn hobby-website!</p>
         </div>
-        <p>Welkom op mijn hobby-website!</p>
     </header>
 
     <div class="intro">
