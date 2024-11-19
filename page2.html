@@ -3,70 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startpagina</title>
+    <title>Subpagina</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #333; /* Achtergrondkleur van de header */
+            background-color: #333; /* Achtergrondkleur */
             color: #f0f0f0;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         header {
+            position: relative; /* Maakt positionering van de terug-knop mogelijk */
             background-color: #333;
             color: white;
             padding: 20px;
             text-align: center;
         }
-        .intro {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f0f0f0; /* Lichte achtergrondkleur */
-            color: #333; /* Donkere tekstkleur */
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        header h1 {
+            margin: 0;
+            font-size: 2em;
         }
-        .intro p {
-            font-size: 1.2em;
-            line-height: 1.6em;
-        }
-        .intro img {
-            margin-top: 20px;
-            max-width: 100%;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .options {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f0f0f0; /* Lichte achtergrondkleur */
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .options a {
-            display: inline-block;
+        .back-btn {
+            position: absolute; /* Plaatst de knop linksboven */
+            top: 20px;
+            left: 20px;
             text-decoration: none;
             color: white;
-            background-color: #d9534f;
-            padding: 15px 30px;
+            background-color: #d9534f; /* Rood */
+            padding: 10px 20px;
             border-radius: 5px;
-            margin: 10px;
-            font-size: 1.1em;
+            font-size: 1em;
             transition: background-color 0.3s;
         }
-        .options a:hover {
-            background-color: #c9302c;
+        .back-btn:hover {
+            background-color: #c9302c; /* Donkerder rood bij hover */
+        }
+        .content {
+            flex: 1; /* Zorgt dat de footer altijd onderaan staat */
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         footer {
             background-color: #333;
             color: white;
             padding: 20px;
             text-align: center;
-            margin-top: auto; /* Push the footer to the bottom */
         }
         footer a {
             color: white;
@@ -80,26 +69,19 @@
 </head>
 <body>
     <header>
-        <h1>Joep van Dongen</h1>
-        <p>Welkom op mijn hobby-website!</p>
+        <!-- Terug-knop linksboven -->
+        <a href="javascript:history.back()" class="back-btn">← Terug</a>
+        <h1>Mijn Hobby-Website</h1>
     </header>
 
-    <div class="intro">
-        <p>
-            Hallo! Mijn naam is Joep van Dongen. Ik ben een enthousiaste fotograaf, fantasy-boeken lezer en tech-liefhebber. 
-            Op deze website deel ik mijn foto's, interessante tech-blogs en meer! Neem een kijkje en ik hoor graag wat je ervan vindt :)
-        </p>
-        <img src="Vogel1.jpg" alt="Foto van Joep">
-    </div>
-
-    <div class="options">
-        <a href="page1.html">Fotografie</a>
-        <a href="page2.html">Tech-blogs</a>
-        <a href="page3.html">Overige blogs</a>
+    <div class="content">
+        <!-- Hier komt de inhoud van de subpagina -->
+        <h2>Subpagina Titel</h2>
+        <p>Hier komt de inhoud van deze specifieke subpagina.</p>
     </div>
 
     <footer>
-        <p>Volg of contacteer mij op...</p>
+        <p>Volg mij op...</p>
         <a href="https://www.instagram.com/joep.vado/">Instagram</a>
         <a href="https://www.linkedin.com/in/joep-van-dongen">LinkedIn</a>
         <a href="mailto:JoepvanDongen29@outlook.com">E-mail</a>
