@@ -16,6 +16,7 @@
             min-height: 100vh;
         }
         header {
+            position: relative; /* Maakt positionering van de terug-knop mogelijk */
             background-color: #333;
             color: white;
             padding: 20px;
@@ -25,10 +26,20 @@
             margin: 0;
             font-size: 2em;
         }
-        header p {
-            margin: 5px 0 0;
-            font-size: 1.2em;
-            color: #ccc;
+        .back-btn {
+            position: absolute; /* Plaatst de knop linksboven */
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #d9534f; /* Rood */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #c9302c; /* Donkerder rood bij hover */
         }
         .content {
             flex: 1; /* Zorgt dat de footer altijd onderaan staat */
@@ -39,20 +50,6 @@
             color: #333;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .content a.back-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: white;
-            background-color: #007acc;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        .content a.back-btn:hover {
-            background-color: #005f99;
         }
         footer {
             background-color: #333;
@@ -72,14 +69,12 @@
 </head>
 <body>
     <header>
+        <!-- Terug-knop linksboven -->
+        <a href="javascript:history.back()" class="back-btn">← Terug</a>
         <h1>Mijn Hobby-Website</h1>
-        <p>Joep van Dongen - Fotografie, Blogs en Meer</p>
     </header>
 
     <div class="content">
-        <!-- Terug-knop -->
-        <a href="javascript:history.back()" class="back-btn">← Terug</a>
-
         <!-- Hier komt de inhoud van de subpagina -->
         <h2>Subpagina Titel</h2>
         <p>Hier komt de inhoud van deze specifieke subpagina.</p>
