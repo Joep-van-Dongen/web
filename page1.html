@@ -61,7 +61,8 @@
             width: 100%;
             overflow: hidden;
             border-radius: 5px;
-            background-color: #ddd; /* Achtergrondkleur voor lege carrousel */
+            background-color: #ddd;
+            margin-bottom: 40px; /* Ruimte tussen de carrousels */
         }
         .carousel-images {
             display: flex;
@@ -110,21 +111,36 @@
 <body>
     <header>
         <a href="javascript:history.back()" class="back-btn">← Terug</a>
-        <h1>Joep van Dongen: fotografie</h1>
+        <h1>Fotografie</h1>
     </header>
 
     <div class="content">
+        <!-- Eerste carrousel -->
         <section class="photos">
-            <h2>Mijn Fotocollectie</h2>
-            <div class="carousel">
+            <h2>Mijn Eerste Fotocollectie</h2>
+            <div class="carousel" id="carousel1">
                 <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird">
-                    <img src="Vogel3.jpg" alt="Test Test">
-                    <!-- Voeg toekomstige foto's hier toe -->
+                    <img src="Vogel1.jpg" alt="Bird 1"> <!-- Vervang de foto hier -->
+                    <img src="Vogel3.jpg" alt="Bird 2"> <!-- Vervang de foto hier -->
                 </div>
                 <div class="carousel-buttons">
-                    <button onclick="prevSlide()">&#10094;</button>
-                    <button onclick="nextSlide()">&#10095;</button>
+                    <button onclick="prevSlide(1)">&#10094;</button>
+                    <button onclick="nextSlide(1)">&#10095;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tweede carrousel -->
+        <section class="photos">
+            <h2>Mijn Tweede Fotocollectie</h2>
+            <div class="carousel" id="carousel2">
+                <div class="carousel-images">
+                    <img src="Vogel1.jpg" alt="Bird 1"> <!-- Vervang de foto hier -->
+                    <img src="Vogel3.jpg" alt="Bird 2"> <!-- Vervang de foto hier -->
+                </div>
+                <div class="carousel-buttons">
+                    <button onclick="prevSlide(2)">&#10094;</button>
+                    <button onclick="nextSlide(2)">&#10095;</button>
                 </div>
             </div>
         </section>
@@ -138,21 +154,21 @@
     </footer>
 
     <script>
-        let currentIndex = 0;
+        let currentIndexes = [0, 0]; // Houdt bij welke slide actief is voor elke carrousel
 
-        function showSlide(index) {
-            const carouselImages = document.querySelector('.carousel-images');
-            const totalImages = document.querySelectorAll('.carousel-images img').length;
-            currentIndex = (index + totalImages) % totalImages; // Loop around
-            carouselImages.style.transform = `translateX(-${currentIndex * 100}%)`;
+        function showSlide(carouselIndex, index) {
+            const carousel = document.querySelector(`#carousel${carouselIndex} .carousel-images`);
+            const totalImages = document.querySelectorAll(`#carousel${carouselIndex} .carousel-images img`).length;
+            currentIndexes[carouselIndex - 1] = (index + totalImages) % totalImages; // Loop-around
+            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex - 1] * 100}%)`;
         }
 
-        function nextSlide() {
-            showSlide(currentIndex + 1);
+        function nextSlide(carouselIndex) {
+            showSlide(carouselIndex, currentIndexes[carouselIndex - 1] + 1);
         }
 
-        function prevSlide() {
-            showSlide(currentIndex - 1);
+        function prevSlide(carouselIndex) {
+            showSlide(carouselIndex, currentIndexes[carouselIndex - 1] - 1);
         }
     </script>
 </body>
