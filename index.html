@@ -3,100 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joep van Dongen - Fotografie</title>
+    <title>Startpagina</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #333;
+            background-color: #333; /* Achtergrondkleur */
             color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
-        header {
-            position: relative;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #d9534f;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        .back-btn:hover {
-            background-color: #c9302c;
-        }
-        .content {
-            flex: 1;
+        .section-box {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #f0f0f0; /* Lichte achtergrondkleur */
+            color: #333; /* Donkere tekstkleur */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .section-box h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .section-box p {
+            font-size: 1.2em;
+            margin: 10px 0 0 0;
+        }
+        .intro {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f0f0; /* Lichte achtergrondkleur */
+            color: #333; /* Donkere tekstkleur */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .intro p {
+            font-size: 1.2em;
+            line-height: 1.6em;
+        }
+        .intro img {
+            margin-top: 20px;
+            max-width: 50%; /* Limit width for a portrait photo */
+            height: auto;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .carousel {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
+        .options {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f0f0; /* Lichte achtergrondkleur */
             border-radius: 5px;
-            background-color: #ddd;
-            margin-bottom: 40px; /* Ruimte tussen de carrousels */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        .carousel-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .carousel img {
-            width: 100%;
-            flex-shrink: 0;
-        }
-        .carousel-buttons {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-        .carousel-buttons button {
-            background-color: rgba(0, 0, 0, 0.7);
+        .options a {
+            display: inline-block;
+            text-decoration: none;
             color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
+            background-color: #d9534f;
+            padding: 15px 30px;
             border-radius: 5px;
+            margin: 10px;
+            font-size: 1.1em;
             transition: background-color 0.3s;
         }
-        .carousel-buttons button:hover {
-            background-color: rgba(0, 0, 0, 0.9);
+        .options a:hover {
+            background-color: #c9302c;
         }
         footer {
             background-color: #333;
             color: white;
             padding: 20px;
             text-align: center;
+            margin-top: auto; /* Push de footer naar beneden */
         }
         footer a {
             color: white;
@@ -110,66 +93,31 @@
 </head>
 <body>
     <header>
-        <a href="javascript:history.back()" class="back-btn">← Terug</a>
-        <h1>Fotografie</h1>
+        <div class="section-box">
+            <h1>Joep van Dongen</h1>
+            <p>Welkom op mijn hobby-website!</p>
+        </div>
     </header>
 
-    <div class="content">
-        <!-- Eerste carrousel -->
-        <section class="photos">
-            <h2>Mijn Eerste Fotocollectie</h2>
-            <div class="carousel" id="carousel1">
-                <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird 1"> <!-- Vervang de foto hier -->
-                    <img src="Vogel3.jpg" alt="Bird 2"> <!-- Vervang de foto hier -->
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(1)">&#10094;</button>
-                    <button onclick="nextSlide(1)">&#10095;</button>
-                </div>
-            </div>
-        </section>
+    <div class="intro">
+        <p>
+            Hallo! Mijn naam is Joep van Dongen. Ik ben een enthousiaste fotograaf, fantasy-boeken lezer en tech-liefhebber. 
+            Op deze website deel ik mijn foto's, interessante tech-blogs en meer! Neem een kijkje en ik hoor graag wat je ervan vindt :)
+        </p>
+        <img src="joep.jpg" alt="Foto van Joep">
+    </div>
 
-        <!-- Tweede carrousel -->
-        <section class="photos">
-            <h2>Mijn Tweede Fotocollectie</h2>
-            <div class="carousel" id="carousel2">
-                <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird 1"> <!-- Vervang de foto hier -->
-                    <img src="Vogel3.jpg" alt="Bird 2"> <!-- Vervang de foto hier -->
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(2)">&#10094;</button>
-                    <button onclick="nextSlide(2)">&#10095;</button>
-                </div>
-            </div>
-        </section>
+    <div class="options">
+        <a href="page1.html">Fotografie</a>
+        <a href="page2.html">Tech-blogs</a>
+        <a href="page3.html">Overige blogs</a>
     </div>
 
     <footer>
-        <p>Volg mij op...</p>
+        <p>Volg of contacteer mij op...</p>
         <a href="https://www.instagram.com/joep.vado/">Instagram</a>
         <a href="https://www.linkedin.com/in/joep-van-dongen">LinkedIn</a>
         <a href="mailto:JoepvanDongen29@outlook.com">E-mail</a>
     </footer>
-
-    <script>
-        let currentIndexes = [0, 0]; // Houdt bij welke slide actief is voor elke carrousel
-
-        function showSlide(carouselIndex, index) {
-            const carousel = document.querySelector(`#carousel${carouselIndex} .carousel-images`);
-            const totalImages = document.querySelectorAll(`#carousel${carouselIndex} .carousel-images img`).length;
-            currentIndexes[carouselIndex - 1] = (index + totalImages) % totalImages; // Loop-around
-            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex - 1] * 100}%)`;
-        }
-
-        function nextSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex - 1] + 1);
-        }
-
-        function prevSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex - 1] - 1);
-        }
-    </script>
 </body>
 </html>
