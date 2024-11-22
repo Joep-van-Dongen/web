@@ -47,12 +47,17 @@
         .back-btn:hover {
             background-color: #c9302c;
         }
-        .toc {
-            background-color: #444;
+        .toc-container {
             padding: 10px 20px;
+            background-color: #444;
             text-align: center;
+        }
+        .toc-container h3 {
             margin: 0;
-            border-bottom: 1px solid #555;
+            color: #f0f0f0;
+        }
+        .toc {
+            margin-top: 10px;
         }
         .toc a {
             color: #f0f0f0;
@@ -95,8 +100,9 @@
             transition: transform 0.5s ease-in-out;
         }
         .carousel img {
-            width: 100%;
+            width: 75%; /* 25% kleiner */
             flex-shrink: 0;
+            margin: auto;
         }
         .carousel-buttons {
             position: absolute;
@@ -141,14 +147,17 @@
         <h2>Fotografie</h2>
     </header>
 
-    <nav class="toc" id="toc">
-        <!-- Dynamische inhoudsopgave wordt hier geplaatst -->
-    </nav>
+    <div class="toc-container">
+        <h3>Fotocollecties:</h3>
+        <nav class="toc" id="toc">
+            <!-- Dynamische inhoudsopgave wordt hier geplaatst -->
+        </nav>
+    </div>
 
     <div class="content" id="content">
         <!-- Eerste carrousel -->
         <section class="photos">
-            <h2>Naam fotocollectie</h2>
+            <h2>Mijn Eerste Fotocollectie</h2>
             <div class="carousel" id="carousel1">
                 <div class="carousel-images">
                     <img src="Vogel1.jpg" alt="Bird 1">
@@ -160,32 +169,13 @@
                 </div>
             </div>
         </section>
-        
- <!-- Eerste carrousel -->
-        <section class="photos">
-            <h2>TESTtest</h2>
-            <div class="carousel" id="carousel1">
-                <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird 1">
-                    <img src="Vogel3.jpg" alt="Bird 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(1)">&#10094;</button>
-                    <button onclick="nextSlide(1)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Derde carrousel -->
+
+        <!-- Tweede carrousel -->
         <section class="photos">
             <h2>Mijn Tweede Fotocollectie</h2>
             <div class="carousel" id="carousel2">
                 <div class="carousel-images">
                     <img src="Vogel1.jpg" alt="Bird 1">
-                    <img src="Vogel3.jpg" alt="Bird 2">
-                    <img src="Vogel3.jpg" alt="Bird 2">
-                    <img src="Vogel1.jpg" alt="Bird 2">
-                    <img src="joep.jpg" alt="Bird 2">
                     <img src="Vogel3.jpg" alt="Bird 2">
                 </div>
                 <div class="carousel-buttons">
@@ -194,6 +184,23 @@
                 </div>
             </div>
         </section>
+
+        <!-- Nieuwe carrousel knip-en-plak code -->
+        <!--
+        <section class="photos">
+            <h2>Titel van Nieuwe Collectie</h2>
+            <div class="carousel" id="carouselX">
+                <div class="carousel-images">
+                    <img src="Foto1.jpg" alt="Beschrijving 1">
+                    <img src="Foto2.jpg" alt="Beschrijving 2">
+                </div>
+                <div class="carousel-buttons">
+                    <button onclick="prevSlide(X)">&#10094;</button>
+                    <button onclick="nextSlide(X)">&#10095;</button>
+                </div>
+            </div>
+        </section>
+        -->
     </div>
 
     <footer>
