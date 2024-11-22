@@ -15,6 +15,7 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
         header {
             position: relative;
             background-color: #333;
@@ -22,16 +23,19 @@
             padding: 20px;
             text-align: center;
         }
+
         header h1 {
             margin: 0;
             font-size: 2.5em;
         }
+
         header h2 {
             margin: 5px 0 0;
             font-size: 1.2em;
             font-weight: normal;
             color: #ddd;
         }
+
         .back-btn {
             position: absolute;
             top: 20px;
@@ -44,71 +48,31 @@
             font-size: 1em;
             transition: background-color 0.3s;
         }
+
         .back-btn:hover {
             background-color: #c9302c;
         }
-        .toc-container {
-            padding: 10px 20px;
-            background-color: #444;
-            text-align: center;
-        }
-        .toc-container h3 {
-            margin: 0;
-            color: #f0f0f0;
-        }
-        .toc {
-            margin-top: 10px;
-        }
-        .toc a {
-            color: #f0f0f0;
-            text-decoration: none;
-            padding: 10px;
-            margin: 5px;
-            display: inline-block;
-            background-color: #555;
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
             border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .toc a:hover {
-            background-color: #777;
-        }
-        .content {
-            flex: 1;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f0f0f0;
-            color: #333;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            background-color: #ddd;
+            margin-bottom: 40px;
         }
 
-    .carousel {
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-        border-radius: 5px;
-        background-color: #ddd;
-        margin-bottom: 40px;
-    }
-    .carousel-images {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        justify-content: center; /* Centraal uitlijnen */
-        align-items: center;
-    }
-    .carousel img {
-        flex-shrink: 0;
-        width: 80%; /* Afbeelding is 80% van de carrouselbreedte */
-        margin: 0 auto; /* Midden in de carrousel */
-    }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
 
-       
+        .carousel img {
+            flex-shrink: 0;
+            width: 100%;
+            height: auto;
+        }
+
         .carousel-buttons {
             position: absolute;
             top: 50%;
@@ -117,6 +81,7 @@
             justify-content: space-between;
             transform: translateY(-50%);
         }
+
         .carousel-buttons button {
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
@@ -126,15 +91,18 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
+
         .carousel-buttons button:hover {
             background-color: rgba(0, 0, 0, 0.9);
         }
+
         footer {
             background-color: #333;
             color: white;
             padding: 20px;
             text-align: center;
         }
+
         footer a {
             color: white;
             text-decoration: none;
@@ -152,75 +120,28 @@
         <h2>Fotografie</h2>
     </header>
 
-    <div class="toc-container">
-        <h3>Fotocollecties:</h3>
-        <nav class="toc" id="toc">
-            <!-- Dynamische inhoudsopgave wordt hier geplaatst -->
-        </nav>
+    <div class="carousel" id="carousel1">
+        <div class="carousel-images">
+            <img src="Vogel1.jpg" alt="Afbeelding 1">
+            <img src="Vogel2.jpg" alt="Afbeelding 2">
+            <img src="Vogel3.jpg" alt="Afbeelding 3">
+        </div>
+        <div class="carousel-buttons">
+            <button onclick="prevSlide(0)">&#10094;</button>
+            <button onclick="nextSlide(0)">&#10095;</button>
+        </div>
     </div>
 
-    <div class="content" id="content">
-        <!-- Eerste carrousel -->
-        <section class="photos">
-            <h2>IJsland 1</h2>
-            <div class="carousel" id="carousel1">
-                <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird 1">
-                    <img src="Vogel3.jpg" alt="Bird 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(0)">&#10094;</button>
-                    <button onclick="nextSlide(0)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tweede carrousel -->
-        <section class="photos">
-            <h2>Japan 1</h2>
-            <div class="carousel" id="carousel2">
-                <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird 1">
-                    <img src="Vogel3.jpg" alt="Bird 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(1)">&#10094;</button>
-                    <button onclick="nextSlide(1)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-        
-   <section class="photos">
-            <h2>Titel vatest3546789-=lectie</h2>
-            <div class="carousel">
-                <div class="carousel-images">
-                    <img src="Vogel2.jpg" alt="Beschrijving 1">
-                    <img src="joep.jpg" alt="Beschrijving 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(2)">&#10094;</button>
-                    <button onclick="nextSlide(2)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Nieuwe carrousel knip-en-plak -->
-        <!-- Voeg dit blok toe voor extra carrousels -->
-        <!--
-        <section class="photos">
-            <h2>Titel van Nieuwe Collectie</h2>
-            <div class="carousel">
-                <div class="carousel-images">
-                    <img src="Foto1.jpg" alt="Beschrijving 1">
-                    <img src="Foto2.jpg" alt="Beschrijving 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(X)">&#10094;</button>
-                    <button onclick="nextSlide(X)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-        -->
+    <div class="carousel" id="carousel2">
+        <div class="carousel-images">
+            <img src="Japan1.jpg" alt="Afbeelding 1">
+            <img src="Japan2.jpg" alt="Afbeelding 2">
+            <img src="Japan3.jpg" alt="Afbeelding 3">
+        </div>
+        <div class="carousel-buttons">
+            <button onclick="prevSlide(1)">&#10094;</button>
+            <button onclick="nextSlide(1)">&#10095;</button>
+        </div>
     </div>
 
     <footer>
@@ -231,39 +152,20 @@
     </footer>
 
     <script>
-        const carousels = document.querySelectorAll('.photos');
-        const toc = document.getElementById('toc');
-
-        // Dynamische inhoudsopgave maken
-        carousels.forEach((section, index) => {
-            const carouselId = `carousel${index + 1}`;
-            section.querySelector('.carousel').id = carouselId; // Zorg voor correcte ID
-            const link = document.createElement('a');
-            link.href = `#${carouselId}`;
-            link.textContent = section.querySelector('h2').textContent;
-            toc.appendChild(link);
-        });
-
-        // Scrollfunctie voor de inhoudsopgave
-        toc.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                e.preventDefault();
-                const target = document.querySelector(e.target.getAttribute('href'));
-                const offset = target.getBoundingClientRect().top + window.scrollY - 70; // 70px boven de sectie stoppen
-                window.scrollTo({
-                    top: offset,
-                    behavior: 'smooth'
-                });
-            }
-        });
-
+        // Array to keep track of the current image index for each carousel
+        const carousels = document.querySelectorAll('.carousel');
         let currentIndexes = new Array(carousels.length).fill(0);
 
         function showSlide(carouselIndex, index) {
-            const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
+            const carousel = carousels[carouselIndex].querySelector('.carousel-images');
             const totalImages = carousel.querySelectorAll('img').length;
+
+            // Update the current index
             currentIndexes[carouselIndex] = (index + totalImages) % totalImages;
-            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
+
+            // Move the carousel to show the correct slide
+            const offset = currentIndexes[carouselIndex] * 100;
+            carousel.style.transform = `translateX(-${offset}%)`;
         }
 
         function nextSlide(carouselIndex) {
