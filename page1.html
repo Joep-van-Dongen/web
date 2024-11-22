@@ -14,8 +14,6 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transform: scale(0.8); /* Schaal de pagina naar 80% */
-            transform-origin: top center; /* Centreer de schaalverkleining */
         }
         header {
             position: relative;
@@ -53,8 +51,6 @@
             padding: 10px 20px;
             background-color: #444;
             text-align: center;
-            width: 100vw; /* Zorg dat de banner over de hele breedte loopt */
-            box-sizing: border-box; /* Houd rekening met padding */
         }
         .toc-container h3 {
             margin: 0;
@@ -104,7 +100,7 @@
             transition: transform 0.5s ease-in-out;
         }
         .carousel img {
-            width: 100%;
+            width: 75%; /* 25% kleiner */
             flex-shrink: 0;
             margin: auto;
         }
@@ -162,7 +158,7 @@
         <!-- Eerste carrousel -->
         <section class="photos">
             <h2>IJsland 1</h2>
-            <div class="carousel">
+            <div class="carousel" id="carousel1">
                 <div class="carousel-images">
                     <img src="Vogel1.jpg" alt="Bird 1">
                     <img src="Vogel3.jpg" alt="Bird 2">
@@ -177,7 +173,7 @@
         <!-- Tweede carrousel -->
         <section class="photos">
             <h2>Japan 1</h2>
-            <div class="carousel">
+            <div class="carousel" id="carousel2">
                 <div class="carousel-images">
                     <img src="Vogel1.jpg" alt="Bird 1">
                     <img src="Vogel3.jpg" alt="Bird 2">
@@ -188,6 +184,24 @@
                 </div>
             </div>
         </section>
+
+        <!-- Nieuwe carrousel knip-en-plak -->
+        <!-- Voeg dit blok toe voor extra carrousels -->
+        <!--
+        <section class="photos">
+            <h2>Titel van Nieuwe Collectie</h2>
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="Foto1.jpg" alt="Beschrijving 1">
+                    <img src="Foto2.jpg" alt="Beschrijving 2">
+                </div>
+                <div class="carousel-buttons">
+                    <button onclick="prevSlide(X)">&#10094;</button>
+                    <button onclick="nextSlide(X)">&#10095;</button>
+                </div>
+            </div>
+        </section>
+        -->
     </div>
 
     <footer>
@@ -211,15 +225,14 @@
             toc.appendChild(link);
         });
 
-        // Scrollfunctie voor de inhoudsopgave met aangepaste scrollpositie
+        // Scrollfunctie voor de inhoudsopgave
         toc.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 e.preventDefault();
                 const target = document.querySelector(e.target.getAttribute('href'));
-                const offset = -20; // Aanpassing om ook de naam van de collectie te laten zien
-                const position = target.getBoundingClientRect().top + window.scrollY + offset;
+                const offset = target.getBoundingClientRect().top + window.scrollY - 70; // 70px boven de sectie stoppen
                 window.scrollTo({
-                    top: position,
+                    top: offset,
                     behavior: 'smooth'
                 });
             }
@@ -230,7 +243,7 @@
         function showSlide(carouselIndex, index) {
             const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
             const totalImages = carousel.querySelectorAll('img').length;
-            currentIndexes[carouselIndex] = (index + totalImages) % totalImages; // Loop-around
+            currentIndexes[carouselIndex] = (index + totalImages) % totalImages;
             carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
         }
 
