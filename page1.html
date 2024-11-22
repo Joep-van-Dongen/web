@@ -15,7 +15,7 @@
             flex-direction: column;
             min-height: 100vh;
             transform: scale(0.8); /* Schaal de pagina naar 80% */
-            transform-origin: top left; /* Zorg dat de schaalverkleining vanaf de linker bovenhoek wordt toegepast */
+            transform-origin: top center; /* Centreer de schaalverkleining */
         }
         header {
             position: relative;
@@ -53,6 +53,8 @@
             padding: 10px 20px;
             background-color: #444;
             text-align: center;
+            width: 100vw; /* Zorg dat de banner over de hele breedte loopt */
+            box-sizing: border-box; /* Houd rekening met padding */
         }
         .toc-container h3 {
             margin: 0;
@@ -186,21 +188,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Knip-en-plak sectie voor nieuwe carrousel -->
-        <section class="photos">
-            <h2>Vogels</h2>
-            <div class="carousel">
-                <div class="carousel-images">
-                    <img src="joep.jpg" alt="Beschrijving 1">
-                    <img src="joep.jpg" alt="Beschrijving 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(2)">&#10094;</button>
-                    <button onclick="nextSlide(2)">&#10095;</button>
-                </div>
-            </div>
-        </section>
     </div>
 
     <footer>
@@ -224,11 +211,15 @@
             toc.appendChild(link);
         });
 
-        // Scrollfunctie voor de inhoudsopgave
+        // Scrollfunctie voor de inhoudsopgave met aangepaste scrollpositie
         toc.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 e.preventDefault();
-                document.querySelector(e.target.getAttribute('href')).scrollIntoView({
+                const target = document.querySelector(e.target.getAttribute('href'));
+                const offset = -20; // Aanpassing om ook de naam van de collectie te laten zien
+                const position = target.getBoundingClientRect().top + window.scrollY + offset;
+                window.scrollTo({
+                    top: position,
                     behavior: 'smooth'
                 });
             }
