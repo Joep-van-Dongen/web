@@ -14,6 +14,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transform: scale(0.8); /* Schaal de pagina naar 80% */
+            transform-origin: top left; /* Zorg dat de schaalverkleining vanaf de linker bovenhoek wordt toegepast */
         }
         header {
             position: relative;
@@ -100,7 +102,7 @@
             transition: transform 0.5s ease-in-out;
         }
         .carousel img {
-            width: 100%; 
+            width: 100%;
             flex-shrink: 0;
             margin: auto;
         }
@@ -158,7 +160,22 @@
         <!-- Eerste carrousel -->
         <section class="photos">
             <h2>IJsland 1</h2>
-            <div class="carousel" id="carousel1">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="Vogel1.jpg" alt="Bird 1">
+                    <img src="Vogel3.jpg" alt="Bird 2">
+                </div>
+                <div class="carousel-buttons">
+                    <button onclick="prevSlide(0)">&#10094;</button>
+                    <button onclick="nextSlide(0)">&#10095;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tweede carrousel -->
+        <section class="photos">
+            <h2>Japan 1</h2>
+            <div class="carousel">
                 <div class="carousel-images">
                     <img src="Vogel1.jpg" alt="Bird 1">
                     <img src="Vogel3.jpg" alt="Bird 2">
@@ -170,13 +187,13 @@
             </div>
         </section>
 
-        <!-- Tweede carrousel -->
+        <!-- Knip-en-plak sectie voor nieuwe carrousel -->
         <section class="photos">
-            <h2>Japan 1</h2>
-            <div class="carousel" id="carousel2">
+            <h2>Vogels</h2>
+            <div class="carousel">
                 <div class="carousel-images">
-                    <img src="Vogel1.jpg" alt="Bird 1">
-                    <img src="Vogel3.jpg" alt="Bird 2">
+                    <img src="joep.jpg" alt="Beschrijving 1">
+                    <img src="joep.jpg" alt="Beschrijving 2">
                 </div>
                 <div class="carousel-buttons">
                     <button onclick="prevSlide(2)">&#10094;</button>
@@ -184,39 +201,6 @@
                 </div>
             </div>
         </section>
-
-        <section class="photos">
-            <h2>Vogels</h2>
-            <div class="carousel" id="carouselX">
-                <div class="carousel-images">
-                    <img src="joep.jpg" alt="Beschrijving 1">
-                    <img src="joep.jpg" alt="Beschrijving 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(3)">&#10094;</button>
-                    <button onclick="nextSlide(3)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-
-
-        
-        <!-- Nieuwe carrousel knip-en-plak code -->
-        <!--
-        <section class="photos">
-            <h2>Titel van Nieuwe Collectie</h2>
-            <div class="carousel" id="carouselX">
-                <div class="carousel-images">
-                    <img src="Foto1.jpg" alt="Beschrijving 1">
-                    <img src="Foto2.jpg" alt="Beschrijving 2">
-                </div>
-                <div class="carousel-buttons">
-                    <button onclick="prevSlide(X)">&#10094;</button>
-                    <button onclick="nextSlide(X)">&#10095;</button>
-                </div>
-            </div>
-        </section>
-        -->
     </div>
 
     <footer>
@@ -230,15 +214,17 @@
         const carousels = document.querySelectorAll('.photos');
         const toc = document.getElementById('toc');
 
-        // Maak inhoudsopgave
+        // Dynamische inhoudsopgave maken
         carousels.forEach((section, index) => {
+            const carouselId = `carousel${index + 1}`;
+            section.querySelector('.carousel').id = carouselId; // Zorg voor correcte ID
             const link = document.createElement('a');
-            link.href = `#carousel${index + 1}`;
+            link.href = `#${carouselId}`;
             link.textContent = section.querySelector('h2').textContent;
             toc.appendChild(link);
         });
 
-        // Scrollfunctie
+        // Scrollfunctie voor de inhoudsopgave
         toc.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 e.preventDefault();
@@ -248,21 +234,21 @@
             }
         });
 
-        let currentIndexes = [0, 0]; // Houdt bij welke slide actief is voor elke carrousel
+        let currentIndexes = new Array(carousels.length).fill(0);
 
         function showSlide(carouselIndex, index) {
-            const carousel = document.querySelector(`#carousel${carouselIndex} .carousel-images`);
-            const totalImages = document.querySelectorAll(`#carousel${carouselIndex} .carousel-images img`).length;
-            currentIndexes[carouselIndex - 1] = (index + totalImages) % totalImages; // Loop-around
-            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex - 1] * 100}%)`;
+            const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
+            const totalImages = carousel.querySelectorAll('img').length;
+            currentIndexes[carouselIndex] = (index + totalImages) % totalImages; // Loop-around
+            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
         }
 
         function nextSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex - 1] + 1);
+            showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
         }
 
         function prevSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex - 1] - 1);
+            showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
         }
     </script>
 </body>
