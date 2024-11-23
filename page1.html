@@ -224,7 +224,19 @@
             link.textContent = section.querySelector('h2').textContent;
             toc.appendChild(link);
         });
-
+        
+        // Scrollfunctie voor de inhoudsopgave
+        toc.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+            e.preventDefault();
+            const target = document.querySelector(e.target.getAttribute('href'));
+            const offset = target.getBoundingClientRect().top + window.scrollY - 70; // 70px boven de sectie stoppen
+            window.scrollTo({
+            top: offset,
+            behavior: 'smooth'
+                });
+            }
+        });
         let currentIndexes = new Array(carousels.length).fill(0);
 
         function showSlide(carouselIndex, index) {
