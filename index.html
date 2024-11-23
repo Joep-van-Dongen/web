@@ -91,27 +91,40 @@
         }
 
         /* Popup Styles */
-        #popup {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            padding: 15px;
-            background-color: #ffcc00;
-            border: 1px solid #ff9900;
-            color: #333;
-            font-size: 16px;
-            z-index: 9999;
-        }
+    #popup {
+        display: none;
+        position: fixed;
+        top: 50%; /* Verplaatst naar het midden van het scherm */
+        left: 50%; /* Verplaatst naar het midden van het scherm */
+        transform: translate(-50%, -50%); /* Zorgt voor perfecte centrering */
+        padding: 20px;
+        background-color: #ffcc00;
+        border: 1px solid #ff9900;
+        color: #333;
+        font-size: 16px;
+        text-align: center; /* Tekst in het midden uitlijnen */
+        z-index: 9999;
+        border-radius: 10px; /* Maak de popup-hoeken afgerond */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Licht schaduweffect */
+        width: 90%; /* Responsive: Neem 90% van het scherm op kleine schermen */
+        max-width: 400px; /* Limiteer de breedte */
+    }
 
-        #popup button {
-            margin-left: 10px;
-            padding: 5px 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    #popup button {
+        display: block; /* Zorg dat de knop op een nieuwe regel staat */
+        margin: 20px auto 0 auto; /* Plaats de knop onderaan en centreer */
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    #popup button:hover {
+        background-color: #0056b3; /* Donkerder blauw bij hover */
+    }
     </style>
 </head>
 <body>
@@ -145,8 +158,8 @@
 
     <!-- Language Detection Pop-Up -->
     <div id="popup">
-        Het lijkt erop dat de website in een andere taal is dan de standaardtaal van je browser. Je kunt automatische vertaling inschakelen in je browser.
-        <button onclick="closePopup()">Sluiten</button>
+        It looks like my website is in a different language than your browser's default language. You can enable automatic translation in your browser.
+        <button onclick="closePopup()">Close</button>
     </div>
 
     <script>
