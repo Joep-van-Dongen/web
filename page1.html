@@ -105,27 +105,34 @@
             flex-shrink: 0;
             margin: auto;
         }
+
         .carousel-buttons {
             position: absolute;
             top: 50%;
-            width: 100%;
+            left: -40px; /* Verplaats de linkerknop naar buiten */
+            right: -40px; /* Verplaats de rechterknop naar buiten */
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
+            pointer-events: none;
         }
+
         .carousel-buttons button {
-            margin: 0 -20px;
+            pointer-events: auto;
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            padding: 10px;
-            cursor: pointer;
+            padding: 10px 15px;
             border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
+
         .carousel-buttons button:hover {
             background-color: rgba(0, 0, 0, 0.9);
         }
+
+        
         footer {
             background-color: #333;
             color: white;
