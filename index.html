@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #333; /* Achtergrondkleur */
+            background-color: #333;
             color: #f0f0f0;
             margin: 0;
             padding: 0;
@@ -16,8 +16,8 @@
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f0f0f0; /* Lichte achtergrondkleur */
-            color: #333; /* Donkere tekstkleur */
+            background-color: #f0f0f0;
+            color: #333;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -34,8 +34,8 @@
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f0f0f0; /* Lichte achtergrondkleur */
-            color: #333; /* Donkere tekstkleur */
+            background-color: #f0f0f0;
+            color: #333;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -46,7 +46,7 @@
         }
         .intro img {
             margin-top: 20px;
-            max-width: 50%; /* Limit width for a portrait photo */
+            max-width: 50%;
             height: auto;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -55,7 +55,7 @@
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f0f0f0; /* Lichte achtergrondkleur */
+            background-color: #f0f0f0;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -79,7 +79,7 @@
             color: white;
             padding: 20px;
             text-align: center;
-            margin-top: auto; /* Push de footer naar beneden */
+            margin-top: auto;
         }
         footer a {
             color: white;
@@ -88,6 +88,29 @@
             border: 1px solid white;
             border-radius: 5px;
             margin: 0 5px;
+        }
+
+        /* Popup Styles */
+        #popup {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 15px;
+            background-color: #ffcc00;
+            border: 1px solid #ff9900;
+            color: #333;
+            font-size: 16px;
+            z-index: 9999;
+        }
+
+        #popup button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -119,5 +142,29 @@
         <a href="https://www.linkedin.com/in/joep-van-dongen">LinkedIn</a>
         <a href="mailto:JoepvanDongen29@outlook.com">E-mail</a>
     </footer>
+
+    <!-- Language Detection Pop-Up -->
+    <div id="popup">
+        Het lijkt erop dat de website in een andere taal is dan de standaardtaal van je browser. Je kunt automatische vertaling inschakelen in je browser.
+        <button onclick="closePopup()">Sluiten</button>
+    </div>
+
+    <script>
+        // Language Detection
+        const userLanguage = navigator.language || navigator.userLanguage;
+        const siteLanguage = document.documentElement.lang;
+
+        // Check if the user's language is different from the site's language
+        if (userLanguage !== siteLanguage) {
+            // Show the popup
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        // Close the popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+
 </body>
 </html>
