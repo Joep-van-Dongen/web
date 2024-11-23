@@ -198,18 +198,9 @@
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
+                        <img src="Vogel1.jpg" alt="Foto">
+                        <img src="Vogel3.jpg" alt="Foto">
+                        <img src="Vogel1.jpg" alt="Foto">
                     </div>
                 </div>
                 <div class="carousel-buttons">
@@ -226,8 +217,8 @@
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
+                        <img src="Vogel1.jpg" alt="Foto">
+                        <img src="Vogel3.jpg" alt="Fout bij laden">
                     </div>
                 </div>
                 <div class="carousel-buttons">
@@ -327,6 +318,22 @@ document.addEventListener('dragstart', function(e) {
     }
 });
 
+document.querySelectorAll('.carousel-images').forEach(carousel => {
+    carousel.querySelectorAll('img').forEach(img => {
+        // Maak een container voor elke afbeelding
+        const container = document.createElement('div');
+        container.classList.add('image-container');
+
+        // Maak een overlay
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
+        // Plaats de afbeelding en overlay in de container
+        img.parentNode.replaceChild(container, img);
+        container.appendChild(img);
+        container.appendChild(overlay);
+    });
+});
         
     </script>
 </body>
