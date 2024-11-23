@@ -14,7 +14,6 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            scroll-behavior: smooth; /* Smooth scrolling */
         }
         header {
             position: relative;
@@ -88,24 +87,21 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-
-        /* Carousel Styles */
-        .carousel-container {
+        .carousel {
             position: relative;
             width: 80%;
-            margin: auto;
-        }
-        .carousel {
             overflow: hidden;
             border-radius: 5px;
             background-color: #ddd;
+            margin-bottom: 40px;
+            margin: auto;
         }
         .carousel-images {
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
         .carousel img {
-            width: 100%; 
+            width: 100%;
             flex-shrink: 0;
             margin: auto;
         }
@@ -116,28 +112,18 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            pointer-events: none;
         }
         .carousel-buttons button {
-            pointer-events: auto; /* Zorg dat knoppen klikbaar zijn */
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 10px;
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
         .carousel-buttons button:hover {
             background-color: rgba(0, 0, 0, 0.9);
-        }
-        .carousel-buttons button.left {
-            position: absolute;
-            left: -50px; /* Plaatst de knop buiten de carousel */
-        }
-        .carousel-buttons button.right {
-            position: absolute;
-            right: -50px; /* Plaatst de knop buiten de carousel */
         }
         footer {
             background-color: #333;
@@ -172,34 +158,30 @@
     <div class="content" id="content">
         <!-- Eerste carrousel -->
         <section class="photos">
-            <h2 id="carousel1-title">IJsland 1</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                    </div>
+            <h2>IJsland 1</h2>
+            <div class="carousel" id="carousel1">
+                <div class="carousel-images">
+                    <img src="Vogel1.jpg" alt="Bird 1">
+                    <img src="Vogel3.jpg" alt="Bird 2">
                 </div>
                 <div class="carousel-buttons">
-                    <button class="left" onclick="prevSlide(0)">&#10094;</button>
-                    <button class="right" onclick="nextSlide(0)">&#10095;</button>
+                    <button onclick="prevSlide(0)">&#10094;</button>
+                    <button onclick="nextSlide(0)">&#10095;</button>
                 </div>
             </div>
         </section>
 
         <!-- Tweede carrousel -->
         <section class="photos">
-            <h2 id="carousel2-title">Japan 1</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Bird 1">
-                        <img src="Vogel3.jpg" alt="Bird 2">
-                    </div>
+            <h2>Japan 1</h2>
+            <div class="carousel" id="carousel2">
+                <div class="carousel-images">
+                    <img src="Vogel1.jpg" alt="Bird 1">
+                    <img src="Vogel3.jpg" alt="Bird 2">
                 </div>
                 <div class="carousel-buttons">
-                    <button class="left" onclick="prevSlide(1)">&#10094;</button>
-                    <button class="right" onclick="nextSlide(1)">&#10095;</button>
+                    <button onclick="prevSlide(1)">&#10094;</button>
+                    <button onclick="nextSlide(1)">&#10095;</button>
                 </div>
             </div>
         </section>
@@ -215,20 +197,34 @@
     <script>
         const carousels = document.querySelectorAll('.photos');
         const toc = document.getElementById('toc');
+        const currentIndexes = new Array(carousels.length).fill(0);
 
         // Dynamische inhoudsopgave maken
         carousels.forEach((section, index) => {
-            const titleId = `carousel${index + 1}-title`;
+            const carouselId = `carousel${index + 1}`;
+            section.querySelector('.carousel').id = carouselId; // Zorg voor correcte ID
             const link = document.createElement('a');
-            link.href = `#${titleId}`;
+            link.href = `#${carouselId}`;
             link.textContent = section.querySelector('h2').textContent;
             toc.appendChild(link);
         });
 
-        let currentIndexes = new Array(carousels.length).fill(0);
+        // Scrollfunctie voor de inhoudsopgave (met smooth scroll en offset van 20px)
+        toc.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                const offset = 20; // Offset van 20px
+                const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
 
         function showSlide(carouselIndex, index) {
-            const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
+            const carousel = carousels[carouselIndex].querySelector('.carousel-images');
             const totalImages = carousel.querySelectorAll('img').length;
             currentIndexes[carouselIndex] = (index + totalImages) % totalImages;
             carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
@@ -241,20 +237,6 @@
         function prevSlide(carouselIndex) {
             showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
         }
-
-        // Smooth scroll met offset
-        document.querySelectorAll('.toc a').forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-
-                const yOffset = -20; // Offset zodat titel zichtbaar blijft
-                const yPosition = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-                window.scrollTo({ top: yPosition, behavior: 'smooth' });
-            });
-        });
     </script>
 </body>
 </html>
