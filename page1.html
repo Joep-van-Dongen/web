@@ -152,6 +152,30 @@
             border-radius: 5px;
             margin: 0 5px;
         }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .carousel-dots span {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: #bbb;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-dots span.active {
+            background-color: #717171;
+        }
+
+        .carousel-dots span:hover {
+            background-color: #888;
+        }
+
     </style>
 </head>
 <body>
@@ -183,6 +207,7 @@
                     <button class="left" onclick="prevSlide(0)">&#10094;</button>
                     <button class="right" onclick="nextSlide(0)">&#10095;</button>
                 </div>
+                <div class="carousel-dots" id="dots-0"></div>
             </div>
         </section>
 
@@ -253,6 +278,33 @@
         function prevSlide(carouselIndex) {
             showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
         }
+        
+// Nieuwe functie om de bolletjes bij te werken
+    function updateDots(carouselIndex) {
+    const dotsContainer = document.getElementById(`dots-${carouselIndex}`);
+    const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
+    dotsContainer.innerHTML = ''; // Reset de bolletjes
+
+    for (let i = 0; i < totalImages; i++) {
+        const dot = document.createElement('span');
+        if (i === currentIndexes[carouselIndex]) {
+            dot.classList.add('active');
+        }
+        dot.onclick = function () {
+            showSlide(carouselIndex, i);
+        };
+        dotsContainer.appendChild(dot);
+        }
+        }
+
+// Zorg ervoor dat bolletjes worden toegevoegd wanneer de pagina wordt geladen
+    window.onload = () => {
+    carousels.forEach((section, index) => {
+        updateDots(index);  // Roep updateDots aan voor elke carrousel bij het laden van de pagina
+    });
+};
+
+        
     </script>
 </body>
 </html>
