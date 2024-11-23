@@ -152,29 +152,28 @@
             border-radius: 5px;
             margin: 0 5px;
         }
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
+        
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
 
-        .carousel-dots span {
-            height: 10px;
-            width: 10px;
-            margin: 0 5px;
-            border-radius: 50%;
-            background-color: #bbb;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+.carousel-dots span {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #bbb;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .carousel-dots span.active {
-            background-color: #717171;
-        }
+.carousel-dots span.active {
+    background-color: #717171;
+}
 
-        .carousel-dots span:hover {
-            background-color: #888;
-        }
+
 
     </style>
 </head>
@@ -225,6 +224,7 @@
                     <button class="left" onclick="prevSlide(1)">&#10094;</button>
                     <button class="right" onclick="nextSlide(1)">&#10095;</button>
                 </div>
+                <div class="carousel-dots" id="dots-1"></div>
             </div>
         </section>
     </div>
@@ -262,47 +262,47 @@
                 });
             }
         });
-        let currentIndexes = new Array(carousels.length).fill(0);
+       let currentIndexes = new Array(carousels.length).fill(0); // Houd bij voor welke carrousel je bent
 
-        function showSlide(carouselIndex, index) {
-            const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
-            const totalImages = carousel.querySelectorAll('img').length;
-            currentIndexes[carouselIndex] = (index + totalImages) % totalImages;
-            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
-        }
+function showSlide(carouselIndex, index) {
+    const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
+    const totalImages = carousel.querySelectorAll('img').length;
+    currentIndexes[carouselIndex] = (index + totalImages) % totalImages; // Bereken de nieuwe index
+    carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
 
-        function nextSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
-        }
+    updateDots(carouselIndex); // Werk de bolletjes bij na elke wijziging
+}
 
-        function prevSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
-        }
-        
-// Nieuwe functie om de bolletjes bij te werken
-    function updateDots(carouselIndex) {
-    const dotsContainer = document.getElementById(`dots-${carouselIndex}`);
+function nextSlide(carouselIndex) {
+    showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
+}
+
+function prevSlide(carouselIndex) {
+    showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
+}
+
+function updateDots(carouselIndex) {
+    const dotsContainer = document.getElementById(`dots-${carouselIndex}`); // Zoek de juiste bolletjes-container
     const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
     dotsContainer.innerHTML = ''; // Reset de bolletjes
 
+    // Maak nieuwe bolletjes aan
     for (let i = 0; i < totalImages; i++) {
         const dot = document.createElement('span');
         if (i === currentIndexes[carouselIndex]) {
-            dot.classList.add('active');
+            dot.classList.add('active'); // Markeer de actieve afbeelding
         }
-        dot.onclick = function () {
-            showSlide(carouselIndex, i);
-        };
         dotsContainer.appendChild(dot);
-        }
-        }
+    }
+}
 
-// Zorg ervoor dat bolletjes worden toegevoegd wanneer de pagina wordt geladen
-    window.onload = () => {
+// Zorg ervoor dat bolletjes worden toegevoegd voor elke carrousel wanneer de pagina laadt
+window.onload = () => {
     carousels.forEach((section, index) => {
-        updateDots(index);  // Roep updateDots aan voor elke carrousel bij het laden van de pagina
+        updateDots(index); // Update bolletjes voor iedere carrousel
     });
 };
+
 
         
     </script>
