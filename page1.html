@@ -14,6 +14,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            scroll-behavior: smooth; /* Smooth scrolling */
         }
         header {
             position: relative;
@@ -171,7 +172,7 @@
     <div class="content" id="content">
         <!-- Eerste carrousel -->
         <section class="photos">
-            <h2>IJsland 1</h2>
+            <h2 id="carousel1-title">IJsland 1</h2>
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
@@ -188,7 +189,7 @@
 
         <!-- Tweede carrousel -->
         <section class="photos">
-            <h2>Japan 1</h2>
+            <h2 id="carousel2-title">Japan 1</h2>
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
@@ -217,10 +218,9 @@
 
         // Dynamische inhoudsopgave maken
         carousels.forEach((section, index) => {
-            const carouselId = `carousel${index + 1}`;
-            section.querySelector('.carousel').id = carouselId; // Zorg voor correcte ID
+            const titleId = `carousel${index + 1}-title`;
             const link = document.createElement('a');
-            link.href = `#${carouselId}`;
+            link.href = `#${titleId}`;
             link.textContent = section.querySelector('h2').textContent;
             toc.appendChild(link);
         });
@@ -241,6 +241,20 @@
         function prevSlide(carouselIndex) {
             showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
         }
+
+        // Smooth scroll met offset
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                const yOffset = -20; // Offset zodat titel zichtbaar blijft
+                const yPosition = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+                window.scrollTo({ top: yPosition, behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
