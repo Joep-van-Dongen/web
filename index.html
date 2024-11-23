@@ -151,12 +151,12 @@
 
     <script>
         // Language Detection
-        const userLanguage = navigator.language || navigator.userLanguage;
-        const siteLanguage = document.documentElement.lang;
+        const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage]; // This gets the user's preferred languages list
+        const siteLanguage = 'nl'; // Set the desired language for the website (Dutch)
 
-        // Check if the user's language is different from the site's language
-        if (userLanguage !== siteLanguage) {
-            // Show the popup
+        // Check if Dutch ('nl') is in the user's language preferences
+        if (!userLanguages.some(lang => lang.startsWith(siteLanguage))) {
+            // Show the popup only if Dutch is not in the browser's preferred languages
             document.getElementById('popup').style.display = 'block';
         }
 
