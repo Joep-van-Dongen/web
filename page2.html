@@ -212,6 +212,19 @@
                 toggle.textContent = blog.classList.contains('expanded') ? 'Minder lezen...' : 'Verder lezen...';
             });
         });
+
+        // Scrollfunctie voor de inhoudsopgave
+        toc.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                const offset = target.getBoundingClientRect().top + window.scrollY - 70; // 70px boven de sectie stoppen
+                window.scrollTo({
+                    top: offset,
+                    behavior: 'smooth'
+                });
+            }
+        });
     </script>
 </body>
 </html>
