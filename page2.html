@@ -80,6 +80,7 @@
             color: #333;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 500px; /* Zorgt voor een consistente hoogte */
         }
         h2 {
             border-bottom: 2px solid #333;
@@ -89,8 +90,18 @@
         .blog {
             margin-bottom: 30px;
         }
+        .blog p {
+            margin: 10px 0;
+        }
         .blog .preview {
+            overflow: hidden;
+            max-height: 160px; /* Vaste hoogte voor 10 zinnen */
             display: block;
+        }
+        .blog.expanded .preview {
+            max-height: none; /* Toon alle tekst bij uitklappen */
+        }
+        .blog .toggle {
             cursor: pointer;
             color: #444;
             background-color: #ddd;
@@ -98,16 +109,11 @@
             padding: 10px;
             text-align: left;
             border-radius: 5px;
-        }
-        .blog .preview:hover {
-            background-color: #bbb;
-        }
-        .blog .full-content {
-            display: none;
+            display: inline-block;
             margin-top: 10px;
-            padding: 10px;
-            background-color: #eee;
-            border-radius: 5px;
+        }
+        .blog .toggle:hover {
+            background-color: #bbb;
         }
         footer {
             background-color: #333;
@@ -143,20 +149,22 @@
         <!-- Blogs -->
         <section class="blog" id="blog1">
             <h2>Reis naar IJsland</h2>
-            <button class="preview">Lees meer...</button>
-            <div class="full-content">
-                <p>IJsland, het land van vuur en ijs, biedt een adembenemend landschap van vulkanen, gletsjers en watervallen. Tijdens mijn reis bezocht ik onder andere de Golden Circle en de beroemde Blue Lagoon. De natuur is hier werkelijk uniek.</p>
+            <div class="preview">
+                <p>IJsland, het land van vuur en ijs, biedt een adembenemend landschap van vulkanen, gletsjers en watervallen. Tijdens mijn reis bezocht ik onder andere de Golden Circle en de beroemde Blue Lagoon. De natuur is hier werkelijk uniek. De zwarte zandstranden, lavavelden, en de magische gletsjers blijven me verbazen.</p>
+                <p>De koude winden van het noorden voegen een rauwe schoonheid toe aan het landschap. Ik had de kans om het noorderlicht te zien, wat een onvergetelijke ervaring was. Elke hoek van IJsland heeft iets bijzonders. Mijn favoriete plek? De indrukwekkende waterval Gullfoss, met zijn krachtige stroom.</p>
                 <p>Meer lezen...</p>
             </div>
+            <button class="toggle">Lees meer...</button>
         </section>
 
         <section class="blog" id="blog2">
             <h2>Avonturen in Japan</h2>
-            <button class="preview">Lees meer...</button>
-            <div class="full-content">
-                <p>Van de neonlichten van Tokio tot de serene tuinen van Kyoto, Japan is een land van contrasten. Mijn favoriete ervaring was het eten van verse sushi in een lokaal visrestaurant in Osaka.</p>
+            <div class="preview">
+                <p>Van de neonlichten van Tokio tot de serene tuinen van Kyoto, Japan is een land van contrasten. Mijn favoriete ervaring was het eten van verse sushi in een lokaal visrestaurant in Osaka. De drukte van Shibuya Crossing staat in schril contrast met de rust van de Arashiyama bamboebossen.</p>
+                <p>Ik bezocht historische kastelen zoals Himeji en ervaarde de traditionele thee-ceremonie. In Hiroshima was het Peace Memorial Park een plek van reflectie en respect. De vriendelijke mensen, rijke cultuur, en het heerlijke eten maken Japan uniek.</p>
                 <p>Meer lezen...</p>
             </div>
+            <button class="toggle">Lees meer...</button>
         </section>
     </div>
 
@@ -178,13 +186,12 @@
             toc.appendChild(link);
         });
 
-        // Uitklappen van blogs
-        document.querySelectorAll('.preview').forEach(button => {
-            button.addEventListener('click', function() {
-                const fullContent = this.nextElementSibling;
-                const isVisible = fullContent.style.display === 'block';
-                fullContent.style.display = isVisible ? 'none' : 'block';
-                this.textContent = isVisible ? 'Lees meer...' : 'Lees minder...';
+        // Uitklappen en inklappen van blogs
+        document.querySelectorAll('.blog').forEach(blog => {
+            const toggle = blog.querySelector('.toggle');
+            toggle.addEventListener('click', function() {
+                blog.classList.toggle('expanded');
+                toggle.textContent = blog.classList.contains('expanded') ? 'Lees minder...' : 'Lees meer...';
             });
         });
     </script>
