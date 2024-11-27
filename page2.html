@@ -218,7 +218,7 @@
             if (e.target.tagName === 'A') {
                 e.preventDefault();
                 const target = document.querySelector(e.target.getAttribute('href'));
-                const offset = target.getBoundingClientRect().top + window.scrollY - 5; // 70px boven de sectie stoppen
+                const offset = target.getBoundingClientRect().top + window.scrollY - 10; // 70px boven de sectie stoppen
                 window.scrollTo({
                     top: offset,
                     behavior: 'smooth'
