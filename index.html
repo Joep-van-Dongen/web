@@ -125,6 +125,23 @@
     #popup button:hover {
         background-color: #0056b3; /* Donkerder blauw bij hover */
     }
+        
+ /* Overlay Styles */
+    #overlay {
+        display: none; /* Initially hidden */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+        z-index: 9998; /* Just behind the popup (9999) */
+    }
+
+    body.no-scroll {
+        overflow: hidden; /* Disable scrolling */
+    }
+        
     </style>
 </head>
 <body>
@@ -156,29 +173,38 @@
         <a href="mailto:JoepvanDongen29@outlook.com">E-mail</a>
           <p class="copyright">© 2024 Joep van Dongen. Alle rechten voorbehouden.</p>
     </footer>
-
-    <!-- Language Detection Pop-Up -->
-    <div id="popup">
-        <p><strong>Important:</strong></p>
-        It looks like my website is in a different language than your browser's default language. You can enable automatic translation in your browser!
-        <button onclick="closePopup()">Close</button>
-    </div>
+    
+<div id="overlay"></div>
+<div id="popup">
+    <p><strong>Important:</strong>!</p>
+    It looks like my website is in a different language than your browser's default language. You can enable automatic translation in your browser!
+    <button onclick="closePopup()">Close</button>
+</div>
 
     <script>
-        // Language Detection
-        const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage]; // This gets the user's preferred languages list
-        const siteLanguage = 'nl'; // Set the desired language for the website (Dutch)
+       // Language Detection
+const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
+const siteLanguage = 'nl'; // Set the desired language for the website (Dutch)
 
-        // Check if Dutch ('nl') is in the user's language preferences
-        if (!userLanguages.some(lang => lang.startsWith(siteLanguage))) {
-            // Show the up only if Dutch is not in the browser's preferred languages
-            document.getElementById('popup').style.display = 'block';
-        }
+// Show popup if the site language is not in the user's preferred languages
+if (!userLanguages.some(lang => lang.startsWith(siteLanguage))) {
+    showPopup();
+}
 
-        // Close the popup
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
+// Show the popup and overlay
+function showPopup() {
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+    document.body.classList.add('no-scroll'); // Disable scrolling
+}
+
+// Close the popup and overlay
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    document.body.classList.remove('no-scroll'); // Re-enable scrolling
+}
+
 
         // Blokkeer rechtsklik op afbeeldingen
 document.addEventListener('contextmenu', function(e) {
