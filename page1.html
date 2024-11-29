@@ -363,15 +363,14 @@
         }
     });
 
-    // Controleer de schermbreedte en pas scrollpositie aan als het een mobiel apparaat is
-    document.addEventListener('DOMContentLoaded', function () {
-        if (window.innerWidth <= 767) { // Stel een drempelwaarde in voor mobiele apparaten
-            const offset = 75; // Aantal pixels dat je wilt dat de pagina begint
-            window.scrollTo({
-                top: offset, // Scroll naar deze offset
-            });
-        }
-    });
+// Controleer de schermbreedte en pas scrollpositie aan als het een mobiel apparaat is
+window.addEventListener('load', function () {
+    if (window.innerWidth <= 767) { // Stel een drempelwaarde in voor mobiele apparaten
+        // Scroll direct naar de gewenste positie zonder animatie
+        window.scrollTo(0, 75); // Scroll naar 75px van bovenaf zonder animatie
+    }
+});
+      
 </script>
 </body>
 </html>
