@@ -44,6 +44,28 @@
             font-size: 1em;
             transition: background-color 0.3s;
         }
+
+        @media screen and (max-width: 767px) {
+            /* Verplaats de terugknop naar boven de titel en zorg voor wat padding aan de bovenkant */
+            .back-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 12px 20px;
+                margin-bottom: 20px;
+                display: inline-block; /* Zorg ervoor dat de knop horizontaal wordt weergegeven boven de titel */
+            }
+
+            /* Maak de titel groter voor mobiele schermen */
+            header h1 {
+                font-size: 2em;
+            }
+
+            header h2 {
+                font-size: 1.2em;
+            }
+        }
+        
         .back-btn:hover {
             background-color: #c9302c;
         }
