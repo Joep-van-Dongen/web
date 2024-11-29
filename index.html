@@ -178,53 +178,54 @@
     <button onclick="closePopup()">Close</button>
 </div>
 
-    <script>
+   <script>
+    // Language Detection
+    const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
+    const siteLanguage = 'nl'; // Set the desired language for the website (Dutch)
 
-        
-       // Language Detection
-const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
-const siteLanguage = 'nl'; // Set the desired language for the website (Dutch)
-
-// Show popup if the site language is not in the user's preferred languages
-if (!userLanguages.some(lang => lang.startsWith(siteLanguage))) {
-    showPopup();
-}
-
-// Show the popup and overlay
-function showPopup() {
-    document.getElementById('popup').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-    document.body.classList.add('no-scroll'); // Disable scrolling
-}
-
-// Close the popup and overlay
-function closePopup() {
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    document.body.classList.remove('no-scroll'); // Re-enable scrolling
-}
-
-// Show the popup only once per session
-function showPopupOnce() {
-    if (!sessionStorage.getItem('popupDisplayed')) {
-        showPopup();
-        sessionStorage.setItem('popupDisplayed', 'true'); // Mark popup as displayed
+    // Show popup only once per session
+    function showPopupOnce() {
+        if (!sessionStorage.getItem('popupDisplayed')) {
+            showPopup();
+            sessionStorage.setItem('popupDisplayed', 'true'); // Mark popup as displayed
+        }
     }
-}
-        // Blokkeer rechtsklik op afbeeldingen
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
 
-// Blokkeer drag-and-drop van afbeeldingen
-document.addEventListener('dragstart', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
+    // Show the popup and overlay
+    function showPopup() {
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        document.body.classList.add('no-scroll'); // Disable scrolling
     }
-});
-    </script>
+
+    // Close the popup and overlay
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+        document.body.classList.remove('no-scroll'); // Re-enable scrolling
+    }
+
+    // Check language preference and show the popup once
+    window.onload = function() {
+        if (!userLanguages.some(lang => lang.startsWith(siteLanguage))) {
+            showPopupOnce(); // Show popup once per session
+        }
+    };
+
+    // Blokkeer rechtsklik op afbeeldingen
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    // Blokkeer drag-and-drop van afbeeldingen
+    document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+</script>
 
 </body>
 </html>
