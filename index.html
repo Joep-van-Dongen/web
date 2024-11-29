@@ -101,7 +101,7 @@
         background-color: #ffcc00;
         border: 1px solid #ff9900;
         color: #333;
-        font-size: 16px;
+        font-size: 20px;
         text-align: center; /* Tekst in het midden uitlijnen */
         z-index: 9999;
         border-radius: 10px; /* Maak de popup-hoeken afgerond */
@@ -159,9 +159,9 @@
 
     <!-- Language Detection Pop-Up -->
     <div id="popup">
-        <p><strong>Important:</strong>!</p>
+        <p><strong>Important:</strong></p>
         It looks like my website is in a different language than your browser's default language. You can enable automatic translation in your browser!
-        <button onclick="closePopup()">Close</button>
+        <button onclick="closeup()">Close</button>
     </div>
 
     <script>
@@ -171,8 +171,8 @@
 
         // Check if Dutch ('nl') is in the user's language preferences
         if (!userLanguages.some(lang => lang.startsWith(siteLanguage))) {
-            // Show the popup only if Dutch is not in the browser's preferred languages
-            document.getElementById('popup').style.display = 'block';
+            // Show the up only if Dutch is not in the browser's preferred languages
+            document.getElementById('up').style.display = 'block';
         }
 
         // Close the popup
