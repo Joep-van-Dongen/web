@@ -107,6 +107,7 @@
             width: 100%; 
             flex-shrink: 0;
             margin: auto;
+            cursor: pointer; /* Cursorn is a pointer when hovering over images */
         }
         .carousel-buttons {
             position: absolute;
@@ -153,42 +154,61 @@
             margin: 0 5px;
         }
         
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
 
-.carousel-dots span {
-    height: 10px;
-    width: 10px;
-    margin: 0 5px;
-    border-radius: 50%;
-    background-color: #bbb;
-    cursor: default;
-    transition: background-color 0.3s;
-}
+        .carousel-dots span {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: #bbb;
+            cursor: default;
+            transition: background-color 0.3s;
+        }
 
-.carousel-dots span.active {
-    background-color: #717171;
-}
+        .carousel-dots span.active {
+            background-color: #717171;
+        }
 
+        /* Vergrootafbeelding en overlay */
+        .large-image {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 1000px;
+            z-index: 1000;
+        }
 
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
 
     </style>
 </head>
 <body>
     <header>
         <a href="index.html" class="back-btn">← Terug</a>
-
         <h1>Joep van Dongen</h1>
         <h2>Fotocollecties</h2>
     </header>
 
     <div class="toc-container">
         <h3>Navigatie:</h3>
-        <nav class="toc" id="toc">
-        </nav>
+        <nav class="toc" id="toc"></nav>
     </div>
 
     <div class="content" id="content">
@@ -198,8 +218,8 @@
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Laadfout">
-                        <img src="Vogel3.jpg" alt="Laadfout">
+                        <img src="Vogel1.jpg" alt="Laadfout" onclick="openModal('Vogel1.jpg')">
+                        <img src="Vogel3.jpg" alt="Laadfout" onclick="openModal('Vogel3.jpg')">
                     </div>
                 </div>
                 <div class="carousel-buttons">
@@ -216,8 +236,8 @@
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Laadfout">
-                        <img src="Vogel37.jpg" alt="Laadfout">
+                        <img src="Vogel1.jpg" alt="Laadfout" onclick="openModal('Vogel1.jpg')">
+                        <img src="Vogel37.jpg" alt="Laadfout" onclick="openModal('Vogel37.jpg')">
                     </div>
                 </div>
                 <div class="carousel-buttons">
@@ -228,15 +248,15 @@
             </div>
         </section>
 
- <!-- derde carrousel -->
+        <!-- Derde carrousel -->
         <section class="photos">
             <h2>Test 3</h2>
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="joep.jpg" alt="Laadfout">
-                        <img src="Vogel333.jpg" alt="Laadfout">
-                        <img src="Vogel1.jpg" alt="Laadfout">
+                        <img src="joep.jpg" alt="Laadfout" onclick="openModal('joep.jpg')">
+                        <img src="Vogel333.jpg" alt="Laadfout" onclick="openModal('Vogel333.jpg')">
+                        <img src="Vogel1.jpg" alt="Laadfout" onclick="openModal('Vogel1.jpg')">
                     </div>
                 </div>
                 <div class="carousel-buttons">
@@ -246,9 +266,6 @@
                 <div class="carousel-dots" id="dots-2"></div>
             </div>
         </section>
-
- 
-        
     </div>
 
     <footer>
@@ -256,8 +273,11 @@
         <a href="https://www.instagram.com/joep.vado/">Instagram</a>
         <a href="https://www.linkedin.com/in/joep-van-dongen">LinkedIn</a>
         <a href="mailto:JoepvanDongen29@outlook.com">E-mail</a>
-          <p class="copyright">© 2024 Joep van Dongen. Alle rechten voorbehouden.</p>
+        <p class="copyright">© 2024 Joep van Dongen. Alle rechten voorbehouden.</p>
     </footer>
+
+    <div class="overlay" id="overlay" onclick="closeModal()"></div>
+    <img src="" id="largeImage" class="large-image">
 
     <script>
         const carousels = document.querySelectorAll('.photos');
@@ -276,71 +296,83 @@
         // Scrollfunctie voor de inhoudsopgave
         toc.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const target = document.querySelector(e.target.getAttribute('href'));
-            const offset = target.getBoundingClientRect().top + window.scrollY - 70; 
-            window.scrollTo({
-            top: offset,
-            behavior: 'smooth'
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                const offset = target.getBoundingClientRect().top + window.scrollY - 70;
+                window.scrollTo({
+                    top: offset,
+                    behavior: 'smooth'
                 });
             }
         });
-       let currentIndexes = new Array(carousels.length).fill(0); // Houd bij voor welke carrousel je bent
 
-function showSlide(carouselIndex, index) {
-    const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
-    const totalImages = carousel.querySelectorAll('img').length;
-    currentIndexes[carouselIndex] = (index + totalImages) % totalImages; // Bereken de nieuwe index
-    carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
+        let currentIndexes = new Array(carousels.length).fill(0);
 
-    updateDots(carouselIndex); // Werk de bolletjes bij na elke wijziging
-}
-
-function nextSlide(carouselIndex) {
-    showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
-}
-
-function prevSlide(carouselIndex) {
-    showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
-}
-
-function updateDots(carouselIndex) {
-    const dotsContainer = document.getElementById(`dots-${carouselIndex}`); // Zoek de juiste bolletjes-container
-    const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
-    dotsContainer.innerHTML = ''; 
-
-    // Maak nieuwe bolletjes aan
-    for (let i = 0; i < totalImages; i++) {
-        const dot = document.createElement('span');
-        if (i === currentIndexes[carouselIndex]) {
-            dot.classList.add('active'); 
+        function showSlide(carouselIndex, index) {
+            const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
+            const totalImages = carousel.querySelectorAll('img').length;
+            currentIndexes[carouselIndex] = (index + totalImages) % totalImages;
+            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
+            updateDots(carouselIndex);
         }
-        dotsContainer.appendChild(dot);
-    }
-}
 
-// Zorg ervoor dat bolletjes worden toegevoegd voor elke carrousel wanneer de pagina laadt
-window.onload = () => {
-    carousels.forEach((section, index) => {
-        updateDots(index); 
-    });
-};
+        function nextSlide(carouselIndex) {
+            showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
+        }
 
-// Blokkeer rechtsklik op afbeeldingen
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
+        function prevSlide(carouselIndex) {
+            showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
+        }
 
-// Blokkeer drag-and-drop van afbeeldingen
-document.addEventListener('dragstart', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
+        function updateDots(carouselIndex) {
+            const dotsContainer = document.getElementById(`dots-${carouselIndex}`);
+            const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalImages; i++) {
+                const dot = document.createElement('span');
+                if (i === currentIndexes[carouselIndex]) {
+                    dot.classList.add('active');
+                }
+                dotsContainer.appendChild(dot);
+            }
+        }
 
-        
+        window.onload = () => {
+            carousels.forEach((section, index) => {
+                updateDots(index);
+            });
+        };
+
+        // Vergroting van de afbeelding
+        function openModal(imageSrc) {
+            const largeImage = document.getElementById('largeImage');
+            const overlay = document.getElementById('overlay');
+            largeImage.src = imageSrc;
+            largeImage.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function closeModal() {
+            const largeImage = document.getElementById('largeImage');
+            const overlay = document.getElementById('overlay');
+            largeImage.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Blokkeer rechtsklik op afbeeldingen
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        // Blokkeer drag-and-drop van afbeeldingen
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
     </script>
 </body>
 </html>
