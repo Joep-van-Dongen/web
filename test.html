@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joep van Dongen - Fotocollecties</title>
+    <title>Joep van Dongen - Blogs</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +16,6 @@
             min-height: 100vh;
         }
         header {
-            position: relative;
             background-color: #333;
             color: white;
             padding: 20px;
@@ -44,6 +43,29 @@
             font-size: 1em;
             transition: background-color 0.3s;
         }
+
+
+        @media screen and (max-width: 767px) {
+            /* Verplaats de terugknop naar boven de titel en zorg voor wat padding aan de bovenkant */
+            .back-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 12px 20px;
+                margin-bottom: 20px;
+                display: inline-block; /* Zorg ervoor dat de knop horizontaal wordt weergegeven boven de titel */
+            }
+
+            /* Maak de titel groter voor mobiele schermen */
+            header h1 {
+                font-size: 2em;
+            }
+
+            header h2 {
+                font-size: 1.2em;
+            }
+        }
+        
         .back-btn:hover {
             background-color: #c9302c;
         }
@@ -81,63 +103,40 @@
             color: #333;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 500px; /* Zorgt voor een consistente hoogte */
         }
         h2 {
             border-bottom: 2px solid #333;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            width: 75%;
-            margin: auto;
+        .blog {
+            margin-bottom: 30px;
         }
-        .carousel {
+        .blog p {
+            margin: 10px 0;
+        }
+        .blog .preview {
             overflow: hidden;
-            border-radius: 5px;
-            background-color: #ddd;
+            max-height: 160px; /* Vaste hoogte voor 10 zinnen */
+            display: block;
         }
-        .carousel-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
+        .blog.expanded .preview {
+            max-height: none; /* Toon alle tekst bij uitklappen */
         }
-        .carousel img {
-            width: 100%; 
-            flex-shrink: 0;
-            margin: auto;
-            cursor: pointer; /* Cursorn is a pointer when hovering over images */
-        }
-        .carousel-buttons {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            pointer-events: none;
-        }
-        .carousel-buttons button {
-            pointer-events: auto; 
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            padding: 10px 15px;
+        .blog .toggle {
             cursor: pointer;
+            color: #444;
+            background-color: #ddd;
+            border: none;
+            padding: 10px;
+            text-align: left;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            display: inline-block;
+            margin-top: 10px;
         }
-        .carousel-buttons button:hover {
-            background-color: rgba(0, 0, 0, 0.9);
-        }
-        .carousel-buttons button.left {
-            position: absolute;
-            left: -50px; 
-        }
-        .carousel-buttons button.right {
-            position: absolute;
-            right: -50px; 
+        .blog .toggle:hover {
+            background-color: #bbb;
         }
         footer {
             background-color: #333;
@@ -153,119 +152,119 @@
             border-radius: 5px;
             margin: 0 5px;
         }
-        
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .carousel-dots span {
-            height: 10px;
-            width: 10px;
-            margin: 0 5px;
-            border-radius: 50%;
-            background-color: #bbb;
-            cursor: default;
-            transition: background-color 0.3s;
-        }
-
-        .carousel-dots span.active {
-            background-color: #717171;
-        }
-
-        /* Vergrootafbeelding en overlay */
-        .large-image {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 1000px;
-            z-index: 1000;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-
     </style>
 </head>
 <body>
     <header>
-        <a href="index.html" class="back-btn">← Terug</a>
+    <a href="index.html" class="back-btn">← Terug</a>
+
         <h1>Joep van Dongen</h1>
-        <h2>Fotocollecties</h2>
+        <h2>Blogs</h2>
     </header>
 
     <div class="toc-container">
         <h3>Navigatie:</h3>
-        <nav class="toc" id="toc"></nav>
+        <nav class="toc" id="toc">
+            <!-- Dynamische inhoudsopgave -->
+        </nav>
     </div>
 
     <div class="content" id="content">
-        <!-- Eerste carrousel -->
-        <section class="photos">
-            <h2>Test 1 1</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Laadfout" onclick="openModal('Vogel1.jpg')">
-                        <img src="Vogel3.jpg" alt="Laadfout" onclick="openModal('Vogel3.jpg')">
-                    </div>
-                </div>
-                <div class="carousel-buttons">
-                    <button class="left" onclick="prevSlide(0)">&#10094;</button>
-                    <button class="right" onclick="nextSlide(0)">&#10095;</button>
-                </div>
-                <div class="carousel-dots" id="dots-0"></div>
+        <!-- Blogs -->
+        <section class="blog" id="blog1">
+            <h2>Avonturen in IJsland</h2>
+            <div class="preview">
+                
+               <p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+
             </div>
+            <button class="toggle">Verder lezen...</button>
         </section>
 
-        <!-- Tweede carrousel -->
-        <section class="photos">
-            <h2>Test 2</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Laadfout" onclick="openModal('Vogel1.jpg')">
-                        <img src="Vogel37.jpg" alt="Laadfout" onclick="openModal('Vogel37.jpg')">
-                    </div>
-                </div>
-                <div class="carousel-buttons">
-                    <button class="left" onclick="prevSlide(1)">&#10094;</button>
-                    <button class="right" onclick="nextSlide(1)">&#10095;</button>
-                </div>
-                <div class="carousel-dots" id="dots-1"></div>
+        <section class="blog" id="blog2">
+            <h2>Reizen door Japan</h2>
+            <div class="preview">
+                
+                <p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+
             </div>
+            
+            <button class="toggle">Verder lezen...</button>
         </section>
 
-        <!-- Derde carrousel -->
-        <section class="photos">
-            <h2>Test 3</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="joep.jpg" alt="Laadfout" onclick="openModal('joep.jpg')">
-                        <img src="Vogel333.jpg" alt="Laadfout" onclick="openModal('Vogel333.jpg')">
-                        <img src="Vogel1.jpg" alt="Laadfout" onclick="openModal('Vogel1.jpg')">
-                    </div>
-                </div>
-                <div class="carousel-buttons">
-                    <button class="left" onclick="prevSlide(2)">&#10094;</button>
-                    <button class="right" onclick="nextSlide(2)">&#10095;</button>
-                </div>
-                <div class="carousel-dots" id="dots-2"></div>
+        <section class="blog" id="blog3">
+            <h2>Waarom een website?</h2>
+            <div class="preview">
+                
+               <p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+
             </div>
+            <button class="toggle">Verder lezen...</button>
         </section>
+
+        <section class="blog" id="blog4">
+            <h2>Stremio & Debrid</h2>
+            <div class="preview">
+                
+               <p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+
+            </div>
+            <button class="toggle">Verder lezen...</button>
+        </section>
+
+        <section class="blog" id="blog5">
+            <h2>iPod</h2>
+            <div class="preview">
+                
+               <p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+<p>na ed neolitchnene vna ikotT ot eed esneer unnetv akvyo, Japn si een naldv nvo ctarenost. njMi avriofte eriepexn sas hte etne va evser hsiu in een loloa sircntaaevu htiasraanet in aOks.a eD dtuekrn an vShuiyb igosnrCs tsa in slihr nsocttar temd ee rrstu an ed aAayirhsam mosonsbfebo.a</p>
+<p>kI iebzoit iisechtrs eeasslnk zoasl ieijm in drevaa de onatidriet oecrneea-eitm.t In iomHiarsh sa eth eaecP Maoirlel kPra een plek na vfeiteirlece dn epestc.t eD ieeidnelvr eepnos, irkee lcatur, nte eh ohddlei eten nkema Jaapn kieun.</p>
+
+            </div>
+            <button class="toggle">Verder lezen...</button>
+        </section>
+
+
+        
     </div>
 
     <footer>
@@ -276,103 +275,38 @@
         <p class="copyright">© 2024 Joep van Dongen. Alle rechten voorbehouden.</p>
     </footer>
 
-    <div class="overlay" id="overlay" onclick="closeModal()"></div>
-    <img src="" id="largeImage" class="large-image">
-
     <script>
-        const carousels = document.querySelectorAll('.photos');
+        // Dynamische inhoudsopgave
+        const blogs = document.querySelectorAll('.blog');
         const toc = document.getElementById('toc');
-
-        // Dynamische inhoudsopgave maken
-        carousels.forEach((section, index) => {
-            const carouselId = `carousel${index + 1}`;
-            section.querySelector('.carousel').id = carouselId; 
+        blogs.forEach(blog => {
             const link = document.createElement('a');
-            link.href = `#${carouselId}`;
-            link.textContent = section.querySelector('h2').textContent;
+            link.href = `#${blog.id}`;
+            link.textContent = blog.querySelector('h2').textContent;
             toc.appendChild(link);
         });
-        
+
+        // Uitklappen en inklappen van blogs
+        document.querySelectorAll('.blog').forEach(blog => {
+            const toggle = blog.querySelector('.toggle');
+            toggle.addEventListener('click', function() {
+                blog.classList.toggle('expanded');
+                toggle.textContent = blog.classList.contains('expanded') ? 'Minder lezen...' : 'Verder lezen...';
+            });
+        });
+
         // Scrollfunctie voor de inhoudsopgave
         toc.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 e.preventDefault();
                 const target = document.querySelector(e.target.getAttribute('href'));
-                const offset = target.getBoundingClientRect().top + window.scrollY - 70;
+                const offset = target.getBoundingClientRect().top + window.scrollY - 10; // 70px boven de sectie stoppen
                 window.scrollTo({
                     top: offset,
                     behavior: 'smooth'
                 });
             }
         });
-
-        let currentIndexes = new Array(carousels.length).fill(0);
-
-        function showSlide(carouselIndex, index) {
-            const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
-            const totalImages = carousel.querySelectorAll('img').length;
-            currentIndexes[carouselIndex] = (index + totalImages) % totalImages;
-            carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
-            updateDots(carouselIndex);
-        }
-
-        function nextSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
-        }
-
-        function prevSlide(carouselIndex) {
-            showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
-        }
-
-        function updateDots(carouselIndex) {
-            const dotsContainer = document.getElementById(`dots-${carouselIndex}`);
-            const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalImages; i++) {
-                const dot = document.createElement('span');
-                if (i === currentIndexes[carouselIndex]) {
-                    dot.classList.add('active');
-                }
-                dotsContainer.appendChild(dot);
-            }
-        }
-
-        window.onload = () => {
-            carousels.forEach((section, index) => {
-                updateDots(index);
-            });
-        };
-
-        // Vergroting van de afbeelding
-        function openModal(imageSrc) {
-            const largeImage = document.getElementById('largeImage');
-            const overlay = document.getElementById('overlay');
-            largeImage.src = imageSrc;
-            largeImage.style.display = 'block';
-            overlay.style.display = 'block';
-        }
-
-        function closeModal() {
-            const largeImage = document.getElementById('largeImage');
-            const overlay = document.getElementById('overlay');
-            largeImage.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-
-        // Blokkeer rechtsklik op afbeeldingen
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-            }
-        });
-
-        // Blokkeer drag-and-drop van afbeeldingen
-        document.addEventListener('dragstart', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-            }
-        });
-
     </script>
 </body>
 </html>
