@@ -43,6 +43,29 @@
             font-size: 1em;
             transition: background-color 0.3s;
         }
+
+
+        @media screen and (max-width: 767px) {
+            /* Verplaats de terugknop naar boven de titel en zorg voor wat padding aan de bovenkant */
+            .back-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 12px 20px;
+                margin-bottom: 20px;
+                display: inline-block; /* Zorg ervoor dat de knop horizontaal wordt weergegeven boven de titel */
+            }
+
+            /* Maak de titel groter voor mobiele schermen */
+            header h1 {
+                font-size: 2em;
+            }
+
+            header h2 {
+                font-size: 1.2em;
+            }
+        }
+        
         .back-btn:hover {
             background-color: #c9302c;
         }
@@ -133,8 +156,7 @@
 </head>
 <body>
     <header>
-    <a href="index.html" class="back-btn">← Terug</a>
-
+        <a href="index.html" class="back-btn">← Terug</a>
         <h1>Joep van Dongen</h1>
         <h2>Blogs</h2>
     </header>
@@ -146,6 +168,8 @@
         </nav>
     </div>
 
+
+    
     <div class="content" id="content">
         <!-- Blogs -->
         <section class="blog" id="blog1">
@@ -284,6 +308,17 @@
                 });
             }
         });
+
+
+        // Controleer de schermbreedte en pas scrollpositie aan als het een mobiel apparaat is
+window.addEventListener('load', function () {
+    if (window.innerWidth <= 767) { // Stel een drempelwaarde in voor mobiele apparaten
+        const offset = 75; // Aantal pixels dat je wilt dat de pagina begint
+        window.scrollTo({
+            top: offset, // Scroll naar deze offset
+        });
+    }
+});
     </script>
 </body>
 </html>
