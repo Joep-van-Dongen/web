@@ -179,6 +179,14 @@
 </div>
 
     <script>
+// Show the popup only once per session
+function showPopupOnce() {
+    if (!sessionStorage.getItem('popupDisplayed')) {
+        showPopup();
+        sessionStorage.setItem('popupDisplayed', 'true'); // Mark popup as displayed
+    }
+}
+        
        // Language Detection
 const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
 const siteLanguage = 'nl'; // Set the desired language for the website (Dutch)
