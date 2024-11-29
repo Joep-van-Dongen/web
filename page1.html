@@ -281,96 +281,97 @@
           <p class="copyright">© 2024 Joep van Dongen. Alle rechten voorbehouden.</p>
     </footer>
 
-    <script>
-        const carousels = document.querySelectorAll('.photos');
-        const toc = document.getElementById('toc');
+  <script>
+    const carousels = document.querySelectorAll('.photos');
+    const toc = document.getElementById('toc');
 
-        // Dynamische inhoudsopgave maken
-        carousels.forEach((section, index) => {
-            const carouselId = `carousel${index + 1}`;
-            section.querySelector('.carousel').id = carouselId; 
-            const link = document.createElement('a');
-            link.href = `#${carouselId}`;
-            link.textContent = section.querySelector('h2').textContent;
-            toc.appendChild(link);
-        });
-        
-        // Scrollfunctie voor de inhoudsopgave
-        toc.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
+    // Dynamische inhoudsopgave maken
+    carousels.forEach((section, index) => {
+        const carouselId = `carousel${index + 1}`;
+        section.querySelector('.carousel').id = carouselId; 
+        const link = document.createElement('a');
+        link.href = `#${carouselId}`;
+        link.textContent = section.querySelector('h2').textContent;
+        toc.appendChild(link);
+    });
+
+    // Scrollfunctie voor de inhoudsopgave
+    toc.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
             e.preventDefault();
             const target = document.querySelector(e.target.getAttribute('href'));
             const offset = target.getBoundingClientRect().top + window.scrollY - 70; 
             window.scrollTo({
-            top: offset,
-            behavior: 'smooth'
-                });
-            }
-        });
-       let currentIndexes = new Array(carousels.length).fill(0); // Houd bij voor welke carrousel je bent
-
-function showSlide(carouselIndex, index) {
-    const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
-    const totalImages = carousel.querySelectorAll('img').length;
-    currentIndexes[carouselIndex] = (index + totalImages) % totalImages; // Bereken de nieuwe index
-    carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
-
-    updateDots(carouselIndex); // Werk de bolletjes bij na elke wijziging
-}
-
-function nextSlide(carouselIndex) {
-    showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
-}
-
-function prevSlide(carouselIndex) {
-    showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
-}
-
-function updateDots(carouselIndex) {
-    const dotsContainer = document.getElementById(`dots-${carouselIndex}`); // Zoek de juiste bolletjes-container
-    const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
-    dotsContainer.innerHTML = ''; 
-
-    // Maak nieuwe bolletjes aan
-    for (let i = 0; i < totalImages; i++) {
-        const dot = document.createElement('span');
-        if (i === currentIndexes[carouselIndex]) {
-            dot.classList.add('active'); 
+                top: offset,
+                behavior: 'smooth'
+            });
         }
-        dotsContainer.appendChild(dot);
-    }
-}
-
-// Zorg ervoor dat bolletjes worden toegevoegd voor elke carrousel wanneer de pagina laadt
-window.onload = () => {
-    carousels.forEach((section, index) => {
-        updateDots(index); 
     });
-};
 
-// Blokkeer rechtsklik op afbeeldingen
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
+    let currentIndexes = new Array(carousels.length).fill(0); // Houd bij voor welke carrousel je bent
+
+    function showSlide(carouselIndex, index) {
+        const carousel = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`);
+        const totalImages = carousel.querySelectorAll('img').length;
+        currentIndexes[carouselIndex] = (index + totalImages) % totalImages; // Bereken de nieuwe index
+        carousel.style.transform = `translateX(-${currentIndexes[carouselIndex] * 100}%)`;
+
+        updateDots(carouselIndex); // Werk de bolletjes bij na elke wijziging
     }
-});
 
-// Blokkeer drag-and-drop van afbeeldingen
-document.addEventListener('dragstart', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
+    function nextSlide(carouselIndex) {
+        showSlide(carouselIndex, currentIndexes[carouselIndex] + 1);
     }
-});
 
-// Controleer de schermbreedte en pas scrollpositie aan als het een mobiel apparaat is
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.innerWidth <= 767) { // Stel een drempelwaarde in voor mobiele apparaten
-        const offset = 75; // Aantal pixels dat je wilt dat de pagina begint
-        window.scrollTo({
-            top: offset, // Scroll naar deze offset
+    function prevSlide(carouselIndex) {
+        showSlide(carouselIndex, currentIndexes[carouselIndex] - 1);
+    }
+
+    function updateDots(carouselIndex) {
+        const dotsContainer = document.getElementById(`dots-${carouselIndex}`); // Zoek de juiste bolletjes-container
+        const totalImages = document.querySelector(`#carousel${carouselIndex + 1} .carousel-images`).querySelectorAll('img').length;
+        dotsContainer.innerHTML = ''; 
+
+        // Maak nieuwe bolletjes aan
+        for (let i = 0; i < totalImages; i++) {
+            const dot = document.createElement('span');
+            if (i === currentIndexes[carouselIndex]) {
+                dot.classList.add('active'); 
+            }
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    // Zorg ervoor dat bolletjes worden toegevoegd voor elke carrousel wanneer de pagina laadt
+    window.onload = () => {
+        carousels.forEach((section, index) => {
+            updateDots(index); 
         });
-    }
-});     
-    </script>
+    };
+
+    // Blokkeer rechtsklik op afbeeldingen
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    // Blokkeer drag-and-drop van afbeeldingen
+    document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    // Controleer de schermbreedte en pas scrollpositie aan als het een mobiel apparaat is
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.innerWidth <= 767) { // Stel een drempelwaarde in voor mobiele apparaten
+            const offset = 75; // Aantal pixels dat je wilt dat de pagina begint
+            window.scrollTo({
+                top: offset, // Scroll naar deze offset
+            });
+        }
+    });
+</script>
 </body>
 </html>
