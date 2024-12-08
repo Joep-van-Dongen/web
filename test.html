@@ -206,6 +206,29 @@
     background-color: #717171;
 }
 
+.image-wrapper {
+    position: relative;
+    display: inline-block; /* Zorgt ervoor dat de afbeelding en tekst correct samen worden geplaatst */
+}
+
+.image-wrapper img {
+    display: block; /* Zorgt dat de afbeelding de volledige ruimte gebruikt */
+    width: 100%; 
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 10px; /* Afstand tot de onderkant van de afbeelding */
+    left: 50%;
+    transform: translateX(-50%); /* Centraal plaatsen */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparante zwarte achtergrond */
+    color: white; /* Witte tekst */
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    white-space: nowrap; /* Voorkomt dat de tekst op meerdere regels komt */
+    box-shadow: 0 0 5px black; /* Zwarte glow rondom de tekst */
+}
 
 
     </style>
@@ -381,6 +404,20 @@ window.addEventListener('load', function () {
         window.scrollTo(0, 75); // Scroll naar 75px van bovenaf zonder animatie
     }
 });
+
+      document.querySelectorAll('.carousel-images img').forEach(img => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('image-wrapper');
+
+    const caption = document.createElement('span');
+    caption.classList.add('image-caption');
+    caption.textContent = img.alt; // Gebruik de alt-tekst van de afbeelding
+
+    img.parentNode.insertBefore(wrapper, img);
+    wrapper.appendChild(img);
+    wrapper.appendChild(caption);
+});
+
       
 </script>
 </body>
