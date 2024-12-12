@@ -133,6 +133,17 @@
             background-color: #ddd;
         }
 
+.carousel-images {
+    display: flex; /* Houd de afbeeldingen in een rij */
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images > div {
+    flex-shrink: 0; /* Voorkom dat wrappers van grootte veranderen */
+    width: 100%; /* Zorg dat elke wrapper de volledige breedte gebruikt */
+    position: relative; /* Voor de positionering van captions */
+}
+
 
 .carousel img {
     width: 100%; /* Vul de volledige breedte van de wrapper */
