@@ -132,16 +132,7 @@
             border-radius: 5px;
             background-color: #ddd;
         }
-.carousel-images {
-    display: flex; /* Houd de afbeeldingen in een rij */
-    transition: transform 0.5s ease-in-out;
-}
 
-.carousel-images > div {
-    flex-shrink: 0; /* Voorkom dat wrappers van grootte veranderen */
-    width: 100%; /* Zorg dat elke wrapper de volledige breedte gebruikt */
-    position: relative; /* Voor de positionering van captions */
-}
 
 .carousel img {
     width: 100%; /* Vul de volledige breedte van de wrapper */
@@ -216,8 +207,8 @@
 .image-caption {
     position: absolute;
     bottom: 10px; /* Afstand tot de onderkant van de afbeelding */
-    left: 50%;
-    transform: translateX(-50%);
+    right: 10px; /* Verplaats naar rechtsonder */
+    transform: translateX(0); /* Geen centrering meer nodig */
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 5px 10px;
@@ -225,9 +216,20 @@
     font-size: 0.9em;
     white-space: nowrap;
     box-shadow: 0 0 5px black;
-    pointer-events: none; /* Zorgt ervoor dat klikken op de tekst geen interactie veroorzaakt */
+    pointer-events: none;
     z-index: 10; /* Zorg ervoor dat de tekst boven de afbeelding staat */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px; /* Beperk de breedte voor de drie puntjes */
 }
+
+.carousel-images > div:hover .image-caption {
+    pointer-events: auto; /* Maak interactie mogelijk */
+    max-width: none; /* Verwijder de breedtebeperking */
+    white-space: normal; /* Sta meer tekst toe in meerdere regels */
+    overflow: visible;
+}
+
 
 
 
