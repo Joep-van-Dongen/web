@@ -421,39 +421,27 @@ window.addEventListener('load', function () {
 
 
       
-document.querySelectorAll('.carousel-images').forEach(carouselImages => {
-    const images = carouselImages.querySelectorAll('img');
+document.querySelectorAll('.carousel-images img').forEach(img => {
+    const altText = img.alt.trim();
 
-    images.forEach(img => {
-        // Maak een nieuwe wrapper-div
-        const wrapper = document.createElement('div');
-        wrapper.style.width = '100%'; // Zorg dat de wrapper de breedte van de carrousel heeft
-        wrapper.style.position = 'relative'; // Voor positionering van captions
+    // Controleer of er een geldige alt-tekst is
+    if (altText && altText !== "GEEN") {
+        // Maak een tooltip-element aan
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = altText;
 
-        // Controleer of er een alt-tekst is en of het niet "GEEN" is
-        const altText = img.alt.trim();
-        if (altText && altText !== "GEEN") {
-            // Maak een nieuwe caption met drie puntjes als er een geldige alt-tekst is
-            const caption = document.createElement('span');
-            caption.classList.add('image-caption');
-            caption.textContent = "..."; // Zet de tekst op drie puntjes
+        // Voeg de tooltip toe na de afbeelding
+        img.parentElement.insertBefore(tooltip, img.nextSibling);
 
-            // Voeg een title-attribuut toe aan de caption voor de alt-tekst
-            caption.title = altText;
-
-            // Voeg de afbeelding en caption toe aan de wrapper
-            img.parentElement.insertBefore(wrapper, img);
-            wrapper.appendChild(img);
-            wrapper.appendChild(caption);
-        } else {
-            // Geen caption nodig als de alt-tekst "GEEN" of leeg is
-            img.parentElement.insertBefore(wrapper, img);
-            wrapper.appendChild(img);
-        }
-    });
+        // Optioneel: Update de tooltip-positie bij hover
+        img.addEventListener('mousemove', (e) => {
+            const rect = img.getBoundingClientRect();
+            tooltip.style.left = `${e.pageX - rect.left}px`;
+            tooltip.style.top = `${e.pageY - rect.top - 30}px`; // Plaats de tooltip iets boven de muis
+        });
+    }
 });
-
-
 
 
       
