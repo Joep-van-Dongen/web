@@ -410,18 +410,23 @@ document.querySelectorAll('.carousel-images').forEach(carouselImages => {
     // Selecteer alle afbeeldingen binnen deze specifieke carousel
     const images = carouselImages.querySelectorAll('img');
     images.forEach(img => {
+        // Maak een div die zowel de afbeelding als de caption bevat
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative'; // Zorg dat de caption goed gepositioneerd wordt
+        wrapper.style.display = 'inline-block'; // Houd de afbeeldingen inline zoals in een carrousel
+
         // Maak een span voor de caption
         const caption = document.createElement('span');
         caption.classList.add('image-caption');
         caption.textContent = img.alt;
 
-        // Zorg ervoor dat de parent van de afbeelding gepositioneerd is
-        img.parentElement.style.position = 'relative'; 
-
-        // Voeg de caption direct na de afbeelding in de DOM toe
-        img.insertAdjacentElement('afterend', caption);
+        // Voeg de afbeelding en caption toe aan de wrapper
+        img.parentElement.insertBefore(wrapper, img);
+        wrapper.appendChild(img);
+        wrapper.appendChild(caption);
     });
 });
+
 
       
 </script>
