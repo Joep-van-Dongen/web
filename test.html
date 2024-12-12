@@ -132,27 +132,15 @@
             border-radius: 5px;
             background-color: #ddd;
         }
-
-.carousel-images {
-    display: flex; /* Houd de afbeeldingen in een rij */
-    transition: transform 0.5s ease-in-out;
-}
-
-.carousel-images > div {
-    flex-shrink: 0; /* Voorkom dat wrappers van grootte veranderen */
-    width: 100%; /* Zorg dat elke wrapper de volledige breedte gebruikt */
-    position: relative; /* Voor de positionering van captions */
-}
-
-
-        
-
-
-.carousel img {
-    width: 100%; /* Vul de volledige breedte van de wrapper */
-    display: block;
-}
-
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel img {
+            width: 100%; 
+            flex-shrink: 0;
+            margin: auto;
+        }
         .carousel-buttons {
             position: absolute;
             top: 50%;
@@ -220,23 +208,22 @@
 
 .tooltip {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.7); /* Donkere achtergrond */
-    color: white; /* Witte tekst */
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 0.9em;
-    visibility: hidden; /* Standaard verborgen */
-    opacity: 0; /* Voor een vloeiende overgang */
-    transition: opacity 0.2s;
-    pointer-events: none; /* Zorgt ervoor dat de tooltip niet de muis blokkeert */
-    white-space: nowrap; /* Voorkomt afbreken van tekst */
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -10px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 10;
 }
 
-.carousel-images img:hover + .tooltip {
-    visibility: visible;
+.tooltip.visible {
     opacity: 1;
+    transform: translate(-50%, -20px);
 }
-
 
 
     </style>
@@ -258,18 +245,18 @@
     <div class="content" id="content">
         <!-- Eerste carrousel -->
         <section class="photos">
-            <h2>jOEHOE</h2>
+            <h2>Oostvaardersplassen</h2>
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-   <img src="Foto/Foto_Oostvaardersplassen_vogel2.jpg" alt="Laadfout">
-                           <img src="Foto/Foto_Oostvaardersplassen_vogel1.jpg" alt="mooie vogel boerenzwaluw">
+                       <img src="Foto/Foto_Oostvaardersplassen_vogel2.jpg" alt="Laadfout">
+                           <img src="Foto/Foto_Oostvaardersplassen_vogel1.jpg" alt="Laadfout">
                           <img src="Foto/Foto_Oostvaardersplassen_paard1.jpg" alt="Laadfout">
-                           <img src="Foto/Foto_Oostvaardersplassen_paard2.jpg" alt="GEEN">
-                           <img src="Foto/Foto_Oostvaardersplassen_eendrust.jpg" alt="Laadfoutjihfdbdjkfshbafjsvdhahkdskavsbsdvjdfusfdvbhjdsvfbefshdej ashfed">
-                           <img src="Foto/Foto_Oostvaardersplassen_vogel3.jpg" alt="GEEN">
-                           <img src="Foto/Foto_Oostvaardersplassen_vogel4.jpg" alt="">
-                    </div>
+                           <img src="Foto/Foto_Oostvaardersplassen_paard2.jpg" alt="Laadfout">
+                           <img src="Foto/Foto_Oostvaardersplassen_eendrust.jpg" alt="Laadfout">
+                           <img src="Foto/Foto_Oostvaardersplassen_vogel3.jpg" alt="Laadfout">
+                           <img src="Foto/Foto_Oostvaardersplassen_vogel4.jpg" alt="Laadfout">
+                        </div>
                 </div>
                 <div class="carousel-buttons">
                     <button class="left" onclick="prevSlide(0)">&#10094;</button>
@@ -281,13 +268,13 @@
 
         <!-- Tweede carrousel -->
         <section class="photos">
-            <h2>VROOM</h2>
+            <h2>IJsland</h2>
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="Vogel1.jpg" alt="Laadfout">
-                        <img src="Vogel37.jpg" alt="Laadfout">
-                    </div>
+           <img src="Foto/Foto_IJsland_mntbike.jpg" alt="Laadfout">
+
+                        </div>
                 </div>
                 <div class="carousel-buttons">
                     <button class="left" onclick="prevSlide(1)">&#10094;</button>
@@ -297,26 +284,7 @@
             </div>
         </section>
 
- <!-- derde carrousel -->
-        <section class="photos">
-            <h2>Test 3</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <img src="joep.jpg" alt="Laadfout">
-                        <img src="Vogel333.jpg" alt="Laadfout">
-                        <img src="Vogel1.jpg" alt="Laadfout">
-                    </div>
-                </div>
-                <div class="carousel-buttons">
-                    <button class="left" onclick="prevSlide(2)">&#10094;</button>
-                    <button class="right" onclick="nextSlide(2)">&#10095;</button>
-                </div>
-                <div class="carousel-dots" id="dots-2"></div>
-            </div>
-        </section>
 
- 
         
     </div>
 
@@ -418,31 +386,33 @@ window.addEventListener('load', function () {
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.carousel img');
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    document.body.appendChild(tooltip);
 
-
-      
-document.querySelectorAll('.carousel-images img').forEach(img => {
-    const altText = img.alt.trim();
-
-    // Controleer of er een geldige alt-tekst is
-    if (altText && altText !== "GEEN") {
-        // Maak een tooltip-element aan
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip';
-        tooltip.textContent = altText;
-
-        // Voeg de tooltip toe na de afbeelding
-        img.parentElement.insertBefore(tooltip, img.nextSibling);
-
-        // Optioneel: Update de tooltip-positie bij hover
-        img.addEventListener('mousemove', (e) => {
-            const rect = img.getBoundingClientRect();
-            tooltip.style.left = `${e.pageX - rect.left}px`;
-            tooltip.style.top = `${e.pageY - rect.top - 30}px`; // Plaats de tooltip iets boven de muis
+    images.forEach((img) => {
+        img.addEventListener('mouseenter', (e) => {
+            const altText = img.getAttribute('alt');
+            if (altText) {
+                tooltip.textContent = altText;
+                tooltip.style.left = `${e.pageX}px`;
+                tooltip.style.top = `${e.pageY}px`;
+                tooltip.classList.add('visible');
+            }
         });
-    }
-});
 
+        img.addEventListener('mousemove', (e) => {
+            tooltip.style.left = `${e.pageX}px`;
+            tooltip.style.top = `${e.pageY}px`;
+        });
+
+        img.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+    });
+});
 
       
 </script>
