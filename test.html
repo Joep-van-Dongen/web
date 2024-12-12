@@ -132,15 +132,22 @@
             border-radius: 5px;
             background-color: #ddd;
         }
-        .carousel-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .carousel img {
-            width: 100%; 
-            flex-shrink: 0;
-            margin: auto;
-        }
+.carousel-images {
+    display: flex; /* Houd de afbeeldingen in een rij */
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images > div {
+    flex-shrink: 0; /* Voorkom dat wrappers van grootte veranderen */
+    width: 100%; /* Zorg dat elke wrapper de volledige breedte gebruikt */
+    position: relative; /* Voor de positionering van captions */
+}
+
+.carousel img {
+    width: 100%; /* Vul de volledige breedte van de wrapper */
+    display: block;
+}
+
         .carousel-buttons {
             position: absolute;
             top: 50%;
@@ -407,15 +414,15 @@ window.addEventListener('load', function () {
 
       
 document.querySelectorAll('.carousel-images').forEach(carouselImages => {
-    // Selecteer alle afbeeldingen binnen deze specifieke carousel
     const images = carouselImages.querySelectorAll('img');
-    images.forEach(img => {
-        // Maak een div die zowel de afbeelding als de caption bevat
-        const wrapper = document.createElement('div');
-        wrapper.style.position = 'relative'; // Zorg dat de caption goed gepositioneerd wordt
-        wrapper.style.display = 'inline-block'; // Houd de afbeeldingen inline zoals in een carrousel
 
-        // Maak een span voor de caption
+    images.forEach(img => {
+        // Maak een nieuwe wrapper-div
+        const wrapper = document.createElement('div');
+        wrapper.style.width = '100%'; // Zorg dat de wrapper de breedte van de carrousel heeft
+        wrapper.style.position = 'relative'; // Voor positionering van captions
+
+        // Maak een nieuwe caption
         const caption = document.createElement('span');
         caption.classList.add('image-caption');
         caption.textContent = img.alt;
