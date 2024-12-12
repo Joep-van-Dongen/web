@@ -403,8 +403,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const middleY = rect.top + rect.height / 2;
             const offsetX = Math.abs(e.clientX - middleX);
             const offsetY = Math.abs(e.clientY - middleY);
-            const toleranceX = rect.width * 0.5; // 20% van de breedte
-            const toleranceY = rect.height * 0.5; // 20% van de hoogte
+            const toleranceX = rect.width * 0.3; // 20% van de breedte
+            const toleranceY = rect.height * 0.3; // 20% van de hoogte
 
             if (altText !== "Laadfout" && offsetX <= toleranceX && offsetY <= toleranceY) {
                 tooltip.textContent = altText;
