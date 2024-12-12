@@ -406,15 +406,21 @@ window.addEventListener('load', function () {
 
 
       
-document.querySelectorAll('.carousel-images img').forEach(img => {
-    // Maak een span voor de caption
-    const caption = document.createElement('span');
-    caption.classList.add('image-caption');
-    caption.textContent = img.alt;
+document.querySelectorAll('.carousel-images').forEach(carouselImages => {
+    // Selecteer alle afbeeldingen binnen deze specifieke carousel
+    const images = carouselImages.querySelectorAll('img');
+    images.forEach(img => {
+        // Maak een span voor de caption
+        const caption = document.createElement('span');
+        caption.classList.add('image-caption');
+        caption.textContent = img.alt;
 
-    // Positioneer de caption in de carousel-structuur
-    img.parentNode.style.position = 'relative'; // Zorg ervoor dat de parent een positionering heeft
-    img.insertAdjacentElement('afterend', caption); // Plaats de caption direct na de afbeelding
+        // Zorg ervoor dat de parent van de afbeelding gepositioneerd is
+        img.parentElement.style.position = 'relative'; 
+
+        // Voeg de caption direct na de afbeelding in de DOM toe
+        img.insertAdjacentElement('afterend', caption);
+    });
 });
 
       
