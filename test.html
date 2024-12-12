@@ -224,21 +224,22 @@
     color: white;
     padding: 5px 10px;
     border-radius: 3px;
-    font-size: 0.9em;
+    font-size: 1.2em; /* Maak de tekst groter */
     white-space: nowrap;
-    box-shadow: 0 0 5px black;
-    pointer-events: none;
-    z-index: 10; /* Zorg ervoor dat de tekst boven de afbeelding staat */
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; /* Drie puntjes als de tekst te lang is */
     max-width: 80px; /* Beperk de breedte voor de drie puntjes */
+    cursor: pointer; /* Verander de cursor naar pointer om hover-effect te tonen */
+    box-shadow: none;
 }
 
+/* Hover effect voor de drie puntjes */
 .carousel-images > div:hover .image-caption {
-    pointer-events: auto; /* Maak interactie mogelijk */
     max-width: none; /* Verwijder de breedtebeperking */
     white-space: normal; /* Sta meer tekst toe in meerdere regels */
     overflow: visible;
+    text-overflow: clip; /* Zorg dat de volledige tekst zichtbaar wordt */
+    background-color: rgba(0, 0, 0, 0.9); /* Versterk de achtergrondkleur bij hover */
 }
 
 
@@ -438,7 +439,10 @@ document.querySelectorAll('.carousel-images').forEach(carouselImages => {
         // Maak een nieuwe caption
         const caption = document.createElement('span');
         caption.classList.add('image-caption');
-        caption.textContent = img.alt;
+        caption.textContent = "..."; // Zet de tekst op drie puntjes
+
+        // Voeg een title-attribuut toe aan de caption voor de alt-tekst
+        caption.title = img.alt;
 
         // Voeg de afbeelding en caption toe aan de wrapper
         img.parentElement.insertBefore(wrapper, img);
@@ -446,6 +450,7 @@ document.querySelectorAll('.carousel-images').forEach(carouselImages => {
         wrapper.appendChild(caption);
     });
 });
+
 
 
       
