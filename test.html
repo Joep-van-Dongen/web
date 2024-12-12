@@ -226,6 +226,7 @@
 }
 
 
+
     </style>
 </head>
 <body>
@@ -393,19 +394,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(tooltip);
 
     images.forEach((img) => {
-        img.addEventListener('mouseenter', (e) => {
+        img.addEventListener('mousemove', (e) => {
             const altText = img.getAttribute('alt');
-            if (altText) {
+            const rect = img.getBoundingClientRect();
+
+            // Check of de muis in het middengebied van de afbeelding is
+            const middleX = rect.left + rect.width / 2;
+            const middleY = rect.top + rect.height / 2;
+            const offsetX = Math.abs(e.clientX - middleX);
+            const offsetY = Math.abs(e.clientY - middleY);
+            const toleranceX = rect.width * 0.2; // 20% van de breedte
+            const toleranceY = rect.height * 0.2; // 20% van de hoogte
+
+            if (altText !== "Laadfout" && offsetX <= toleranceX && offsetY <= toleranceY) {
                 tooltip.textContent = altText;
                 tooltip.style.left = `${e.pageX}px`;
                 tooltip.style.top = `${e.pageY}px`;
                 tooltip.classList.add('visible');
+            } else {
+                tooltip.classList.remove('visible');
             }
-        });
-
-        img.addEventListener('mousemove', (e) => {
-            tooltip.style.left = `${e.pageX}px`;
-            tooltip.style.top = `${e.pageY}px`;
         });
 
         img.addEventListener('mouseleave', () => {
@@ -413,6 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
 
       
 </script>
