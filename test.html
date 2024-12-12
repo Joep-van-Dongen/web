@@ -220,24 +220,22 @@
 
 .tooltip {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.7); /* Donkere achtergrond */
+    color: white; /* Witte tekst */
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 0.9em;
-    visibility: hidden;
-    opacity: 0;
+    visibility: hidden; /* Standaard verborgen */
+    opacity: 0; /* Voor een vloeiende overgang */
     transition: opacity 0.2s;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 10; /* Zichtbaarheid boven andere elementen */
+    pointer-events: none; /* Zorgt ervoor dat de tooltip niet de muis blokkeert */
+    white-space: nowrap; /* Voorkomt afbreken van tekst */
 }
 
 .carousel-images img:hover + .tooltip {
     visibility: visible;
     opacity: 1;
 }
-
 
 
 
@@ -426,42 +424,24 @@ window.addEventListener('load', function () {
 document.querySelectorAll('.carousel-images img').forEach(img => {
     const altText = img.alt.trim();
 
+    // Controleer of er een geldige alt-tekst is
     if (altText && altText !== "GEEN") {
+        // Maak een tooltip-element aan
         const tooltip = document.createElement('div');
         tooltip.className = 'tooltip';
         tooltip.textContent = altText;
+
+        // Voeg de tooltip toe na de afbeelding
         img.parentElement.insertBefore(tooltip, img.nextSibling);
 
+        // Optioneel: Update de tooltip-positie bij hover
         img.addEventListener('mousemove', (e) => {
             const rect = img.getBoundingClientRect();
-            const tooltipWidth = tooltip.offsetWidth;
-            const tooltipHeight = tooltip.offsetHeight;
-
-            // Positie van de tooltip berekenen
-            let left = e.pageX - rect.left - tooltipWidth / 2;
-            let top = e.pageY - rect.top - tooltipHeight - 10;
-
-            // Zorgen dat de tooltip binnen de afbeelding blijft
-            if (left < 0) left = 0; // Links buiten beeld
-            if (left + tooltipWidth > rect.width) left = rect.width - tooltipWidth; // Rechts buiten beeld
-            if (top < 0) top = e.pageY - rect.top + 10; // Boven buiten beeld
-
-            tooltip.style.left = `${left}px`;
-            tooltip.style.top = `${top}px`;
-        });
-
-        img.addEventListener('mouseleave', () => {
-            tooltip.style.visibility = 'hidden';
-            tooltip.style.opacity = '0';
-        });
-
-        img.addEventListener('mouseenter', () => {
-            tooltip.style.visibility = 'visible';
-            tooltip.style.opacity = '1';
+            tooltip.style.left = `${e.pageX - rect.left}px`;
+            tooltip.style.top = `${e.pageY - rect.top - 30}px`; // Plaats de tooltip iets boven de muis
         });
     }
 });
-
 
 
       
